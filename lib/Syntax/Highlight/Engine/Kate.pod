@@ -1,0 +1,318 @@
+=head1 NAME
+
+Syntax::Highlight::Engine::Kate - a port to Perl of the syntax highlight engine of the Kate texteditor.
+
+=head1 SYNOPSIS
+
+ my $hl = new Syntax::Highlight::Engine::Kate(
+    language => 'Perl',
+    substitutions => {
+       "<" => "&lt;",
+       ">" => "&gt;",
+       "&" => "&amp;",
+       " " => "&nbsp;",
+       "\t" => "&nbsp;&nbsp;&nbsp;",
+       "\n" => "<BR>\n",
+    },
+    format_table => {
+       Alert => ["<font color=\"#0000ff\">", "</font>"],
+       BaseN => ["<font color=\"#007f00\">", "</font>"],
+       BString => ["<font color=\"#c9a7ff\">", "</font>"],
+       Char => ["<font color=\"#ff00ff\">", "</font>"],
+       Comment => ["<font color=\"#7f7f7f\"><i>", "</i></font>"],
+       DataType => ["<font color=\"#0000ff\">", "</font>"],
+       DecVal => ["<font color=\"#00007f\">", "</font>"],
+       Error => ["<font color=\"#ff0000\"><b><i>", "</i></b></font>"],
+       Float => ["<font color=\"#00007f\">", "</font>"],
+       Function => ["<font color=\"#007f00\">", "</font>"],
+       IString => ["<font color=\"#ff0000\">", ""],
+       Keyword => ["<b>", "</b>"],
+       Normal => ["", ""],
+       Operator => ["<font color=\"#ffa500\">", "</font>"],
+       Others => ["<font color=\"#b03060\">", "</font>"],
+       RegionMarker => ["<font color=\"#96b9ff\"><i>", "</i></font>"],
+       Reserved => ["<font color=\"#9b30ff\"><b>", "</b></font>"],
+       String => ["<font color=\"#ff0000\">", "</font>"],
+       Variable => ["<font color=\"#0000ff\"><b>", "</b></font>"],
+       Warning => ["<font color=\"#0000ff\"><b><i>", "</b></i></font>"],
+    },
+ );
+ 
+ print "<html>\n<head>\n</head>\n<body>\n";
+ while (my $in = <>) {
+    print $hl->highlightText($in);
+ }
+ print "</body>\n</html>\n";
+
+=head1 DESCRIPTION
+
+Syntax::Highlight::Engine::Kate is a port to perl of the syntax highlight engine of the Kate text editor.
+
+The language xml files of kate have been rewritten to perl modules using a script. These modules function
+as plugins to this module. 
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<language>
+
+Specify the language you want highlighted. Currently the following languages are supported:
+
+ .desktop            4GL                 4GL-PER
+ AHDL                ANSI C89            ASP
+ AVR Assembler       AWK                 Ada
+ Alerts              Asm6502             BaseTest
+ BaseTestchild       Bash                BibTeX
+ C                   C#                  C++
+ CGiS                CMake               CSS
+ CUE Sheet           Cg                  ChangeLog
+ Cisco               Clipper             ColdFusion
+ Common Lisp         Component-Pascal    D
+ Debian Changelog    Debian Control      Diff
+ Doxygen             E Language          Eiffel
+ Euphoria            Fortran             GDL
+ GLSL                GNU Assembler       GNU Gettext
+ HTML                Haskell             IDL
+ ILERPG              INI Files           Inform
+ Intel x86 (NASM)    JSP                 Java
+ JavaScript          Javadoc             KBasic
+ LDIF                LPC                 LaTeX
+ Lex/Flex            LilyPond            Literate Haskell
+ Lua                 MAB-DB              MIPS Assembler
+ Makefile            Mason               Matlab
+ Modula-2            Music Publisher     Octave
+ PHP (HTML)          PHP/PHP             POV-Ray
+ Pascal              Perl                PicAsm
+ Pike                PostScript          Prolog
+ PureBasic           Python              Quake Script
+ R Script            REXX                RPM Spec
+ RSI IDL             RenderMan RIB       Ruby
+ SGML                SML                 SQL
+ SQL (MySQL)         SQL (PostgreSQL)    Sather
+ Scheme              Sieve               Spice
+ Stata               TI Basic            Tcl/Tk
+ UnrealScript        VHDL                VRML
+ Velocity            Verilog             WINE Config
+ XML                 XML (Debug)         Yacc/Bison
+ ferite              progress            scilab
+ txt2tags            xHarbour            xslt
+ yacas
+
+=item B<plugins>
+
+If you created your own language plugins you may specify a list of them with this option.
+
+ plugins => [
+   ["MyModuleName", "MyLanguageName", "*,ext1;*.ext2", "Section"],
+   ....
+ ]
+
+=item B<format_table>
+
+This option must be specified if the B<highlightText> method needs to do anything usefull for you.
+All mentioned keys in the synopsis must be specified.
+
+
+=item B<substitutions>
+
+With this option you can specify additional formatting options.
+
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item B<column>
+
+returns the column position in the line that is currently highlighted.
+
+=item B<contextParse>(I<$plugin>, I<$context>);
+
+Called by the plugins after a test succeeds. if B<$context> has following values:
+
+ #pop       returns to the previous context, removes to top item in the stack. Can
+            also be specified as #pop#pop etc.
+ #stay      does nothing.
+ ##....     Switches to the plugin specified in .... and assumes it's basecontext.
+ ....       Swtiches to the context specified in ....
+
+=item B<extensions>
+
+returns a reference to the extensions hash,
+
+=item B<firstnonspace>(I<$string>);
+
+returns true if the current line did not contain a non-spatial character so far and the first 
+character in B<$string> is also a spatial character.
+
+=item B<formatTable>
+
+sets and returns the instance variable B<format_table>. See also the option B<format_table>
+
+=item B<highlight>(I<$text>);
+
+highlights I<$text>. It does so by selecting the proper callback
+from the B<commands> hash and invoke it. It will do so untill
+$text has been reduced to an empty string. returns a paired list
+of snippets of text and the attribute with which they should be 
+highlighted.
+
+=item B<highlightText>(I<$text>);
+
+highlights I<$text> and reformats it using the B<format_table> and B<substitutions>
+
+=item B<language>(I<?$language?>)
+
+Sets and returns the current language that is highlighted. when setting the language a reset is also done.
+
+=item B<languageList>
+
+returns a list of languages for which plugins have been defined.
+
+=item B<languagePlug>(I<$language>);
+
+returns the module name of the plugin for B<$language>
+
+=item B<lastchar>
+
+return the last character that was processed.
+
+=item B<lastcharDeliminator>
+
+returns true if the last character processed was a deliminator.
+
+=item B<linesegment>
+
+returns the string of text in the current line that has been processed so far,
+
+=item B<linestart>
+
+returns true if processing is currently at the beginning of a line.
+
+=item B<out>(I<?\@highlightedlist?>);
+
+sets and returns the instance variable 'out'.
+
+=item B<pluginGet>(I<$language>);
+
+Returns a reference to a plugin object for the specified language. Creating an 
+instance if needed.
+
+=item B<reset>
+
+Resets the highlight engine to a fresh state, does not change the syntx.
+
+=item B<sections>
+
+Returns a reference to the sections hash.
+
+=item B<snippet>
+
+Contains the current snippet of text that will have one attribute. The moment the attribute 
+changes it will be parsed.
+
+=item B<snippetAppend>(I<$string>)
+
+appends I<$string> to the current snippet.
+
+=item B<snippetAttribute>(I<$attribute>)
+
+Sets and returns the used attribute.
+
+=item B<snippetForce>
+
+Forces the current snippet to be parsed.
+
+=item B<snippetParse>(I<$text>, I<?$attribute?>)
+
+If attribute is defined and differs from the current attribute it does a snippetForce and
+sets the current attribute to B<$attribute>. Then it does a snippetAppend of B<$text>
+
+=item B<stack>
+
+sets and returns the instance variable 'stack', a reference to an array
+
+=item B<stackPull>
+
+retrieves the element that is on top of the stack, decrements stacksize by 1.
+
+=item B<stackPush>(I<$tagname>);
+
+puts I<$tagname> on top of the stack, increments stacksize by 1
+
+=item B<stackTop>
+
+Retrieves the element that is on top of the stack.
+
+=item B<stateCompare>(I<\@state>)
+
+Compares two lists, \@state and the stack. returns true if they
+match.
+
+=item B<stateGet>
+
+Returns a list containing the entire stack.
+
+=item B<stateSet>(I<@list>)
+
+Accepts I<@list> as the current stack.
+
+=item B<substitutions>
+
+sets and returns a reference to the substitutions hash.
+
+=back
+
+=head1 ATTRIBUTES
+
+In the kate XML syntax files you find under the section B<<itemDatas>> entries like 
+<itemData name="Unknown Property"  defStyleNum="dsError" italic="1"/>. Kate is an editor
+so it is ok to have definitions for forground and background colors and so on. However, 
+since this Module is supposed to be a more universal highlight engine, the attributes need
+to be fully abstract. In which case, Kate does not have enough default attributes defined
+to fullfill all needs. Kate defines the following standard attributes: B<dsNormal>, B<dsKeyword>, 
+B<dsDataType>, B<dsDecVal>, B<dsBaseN>, B<dsFloat>, B<dsChar>, B<dsString>, B<dsComment>, B<dsOthers>, 
+B<dsAlert>, B<dsFunction>, B<dsRegionMarker>, B<dsError>. This module leaves out the "ds" part and uses 
+following additional attributes: B<BString>, B<IString>, B<Operator>, B<Reserved>, B<Variable>. I have 
+modified the XML files so that each highlight mode would get it's own attribute. In quite a few cases
+still not enough attributes were defined. So in some languages different modes have the same attribute.
+
+=head1 BUGS
+
+Float is detected differently than in the Kate editor.
+
+The regular expression engine of the Kate editor, qregexp, appears to be more tolerant to mistakes
+in regular expressions than perl. This might lead to error messages and differences in behaviour. 
+Most of the problems were sorted out while developing, because error messages appeared. For as far
+as differences in behaviour is concerned, testing is the only way to find out, so i hope the users
+out there will be able to tell me more.
+
+This module is mimicking the behaviour of the syntax highlight engine of the Kate editor. If you find
+a bug/mistake in the highlighting, please check if Kate behaves in the same way. If yes, the cause is
+likely to be found there.
+
+
+=head1 ACKNOWLEDGEMENTS
+
+All the people who wrote Kate and the syntax highlight xml files.
+
+=head1 AUTHOR AND COPYRIGHT
+
+This module is written and maintained by:
+
+Hans Jeuken < haje at toneel dot demon dot nl >
+
+Copyright (c) 2006 by Hans Jeuken, all rights reserved.
+
+You may freely distribute and/or modify this module under the same terms 
+as Perl itself. 
+
+=head1 SEE ALSO
+
+Synax::Highlight::Engine::Kate::Template http:://www.kate-editor.org
+
+=cut
+

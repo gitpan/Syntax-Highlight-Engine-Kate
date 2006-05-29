@@ -1,0 +1,6 @@
+Revision history for Perl extension Tk::CodeText.
+
+0.01  Fri Oct 22 13:26:18 2004
+	- original version; created by h2xs 1.23 with options
+		-X -b 5.6.0 Tk::CodeText
+
