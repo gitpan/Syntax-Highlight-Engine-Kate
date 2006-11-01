@@ -1,4 +1,4 @@
-# Copyright (c) 2005 Hans Jeuken. All rights reserved.
+# Copyright (c) 2005 - 2006 Hans Jeuken. All rights reserved.
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
@@ -7,12 +7,12 @@
 
 #kate xml version 1.14
 #kate version 2.3
-#generated: Sun May 28 21:18:26 2006, localtime
+#generated: Wed Nov  1 21:17:45 2006, localtime
 
 package Syntax::Highlight::Engine::Kate::Cdash;
 
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use strict;
 use warnings;
@@ -155,6 +155,7 @@ sub new {
 	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
 	$self->basecontext('Normal');
 	$self->keywordscase(1);
+	$self->initialize;
 	bless ($self, $class);
 	return $self;
 }
@@ -197,7 +198,7 @@ sub parseNormal {
 		return 1
 	}
 	# type => Float
-	if ($self->testFloat($text, 0, 0, undef, 0, '#stay', 'Float')) {
+	if ($self->testFloat($text, 0, undef, 0, '#stay', 'Float')) {
 		# type => AnyChar
 		if ($self->testAnyChar($text, 'fF', 0, 0, undef, 0, '#stay', 'Float')) {
 			return 1
@@ -212,7 +213,7 @@ sub parseNormal {
 		return 1
 	}
 	# type => Int
-	if ($self->testInt($text, 0, 0, undef, 0, '#stay', 'Decimal')) {
+	if ($self->testInt($text, 0, undef, 0, '#stay', 'Decimal')) {
 		# type => StringDetect
 		if ($self->testStringDetect($text, 'ULL', 1, 0, 0, undef, 0, '#stay', 'Decimal')) {
 			return 1

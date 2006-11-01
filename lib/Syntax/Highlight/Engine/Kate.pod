@@ -4,6 +4,9 @@ Syntax::Highlight::Engine::Kate - a port to Perl of the syntax highlight engine 
 
 =head1 SYNOPSIS
 
+ #if you want to create a compiled executable, you may want to do this:
+ use Syntax::Highlight::Engine::Kate::All;
+ 
  my $hl = new Syntax::Highlight::Engine::Kate(
     language => 'Perl',
     substitutions => {
@@ -38,6 +41,42 @@ Syntax::Highlight::Engine::Kate - a port to Perl of the syntax highlight engine 
     },
  );
  
+ #or
+ 
+ my $hl = new Syntax::Highlight::Engine::Kate::Perl(
+    substitutions => {
+       "<" => "&lt;",
+       ">" => "&gt;",
+       "&" => "&amp;",
+       " " => "&nbsp;",
+       "\t" => "&nbsp;&nbsp;&nbsp;",
+       "\n" => "<BR>\n",
+    },
+    format_table => {
+       Alert => ["<font color=\"#0000ff\">", "</font>"],
+       BaseN => ["<font color=\"#007f00\">", "</font>"],
+       BString => ["<font color=\"#c9a7ff\">", "</font>"],
+       Char => ["<font color=\"#ff00ff\">", "</font>"],
+       Comment => ["<font color=\"#7f7f7f\"><i>", "</i></font>"],
+       DataType => ["<font color=\"#0000ff\">", "</font>"],
+       DecVal => ["<font color=\"#00007f\">", "</font>"],
+       Error => ["<font color=\"#ff0000\"><b><i>", "</i></b></font>"],
+       Float => ["<font color=\"#00007f\">", "</font>"],
+       Function => ["<font color=\"#007f00\">", "</font>"],
+       IString => ["<font color=\"#ff0000\">", ""],
+       Keyword => ["<b>", "</b>"],
+       Normal => ["", ""],
+       Operator => ["<font color=\"#ffa500\">", "</font>"],
+       Others => ["<font color=\"#b03060\">", "</font>"],
+       RegionMarker => ["<font color=\"#96b9ff\"><i>", "</i></font>"],
+       Reserved => ["<font color=\"#9b30ff\"><b>", "</b></font>"],
+       String => ["<font color=\"#ff0000\">", "</font>"],
+       Variable => ["<font color=\"#0000ff\"><b>", "</b></font>"],
+       Warning => ["<font color=\"#0000ff\"><b><i>", "</b></i></font>"],
+    },
+ );
+ 
+ 
  print "<html>\n<head>\n</head>\n<body>\n";
  while (my $in = <>) {
     print $hl->highlightText($in);
@@ -46,10 +85,13 @@ Syntax::Highlight::Engine::Kate - a port to Perl of the syntax highlight engine 
 
 =head1 DESCRIPTION
 
-Syntax::Highlight::Engine::Kate is a port to perl of the syntax highlight engine of the Kate text editor.
+Syntax::Highlight::Engine::Kate is a port to perl of the syntax highlight engine of the 
+Kate text editor.
 
-The language xml files of kate have been rewritten to perl modules using a script. These modules function
-as plugins to this module. 
+The language xml files of kate have been rewritten to perl modules using a script. These modules 
+function as plugins to this module.
+
+Syntax::Highlight::Engine::Kate inherits Syntax::Highlight::Engine::Kate::Template.
 
 =head1 OPTIONS
 
@@ -57,47 +99,10 @@ as plugins to this module.
 
 =item B<language>
 
-Specify the language you want highlighted. Currently the following languages are supported:
+Specify the language you want highlighted.
+look in the B<PLUGINS> section for supported languages.
 
- .desktop            4GL                 4GL-PER
- AHDL                ANSI C89            ASP
- AVR Assembler       AWK                 Ada
- Alerts              Asm6502             BaseTest
- BaseTestchild       Bash                BibTeX
- C                   C#                  C++
- CGiS                CMake               CSS
- CUE Sheet           Cg                  ChangeLog
- Cisco               Clipper             ColdFusion
- Common Lisp         Component-Pascal    D
- Debian Changelog    Debian Control      Diff
- Doxygen             E Language          Eiffel
- Euphoria            Fortran             GDL
- GLSL                GNU Assembler       GNU Gettext
- HTML                Haskell             IDL
- ILERPG              INI Files           Inform
- Intel x86 (NASM)    JSP                 Java
- JavaScript          Javadoc             KBasic
- LDIF                LPC                 LaTeX
- Lex/Flex            LilyPond            Literate Haskell
- Lua                 MAB-DB              MIPS Assembler
- Makefile            Mason               Matlab
- Modula-2            Music Publisher     Octave
- PHP (HTML)          PHP/PHP             POV-Ray
- Pascal              Perl                PicAsm
- Pike                PostScript          Prolog
- PureBasic           Python              Quake Script
- R Script            REXX                RPM Spec
- RSI IDL             RenderMan RIB       Ruby
- SGML                SML                 SQL
- SQL (MySQL)         SQL (PostgreSQL)    Sather
- Scheme              Sieve               Spice
- Stata               TI Basic            Tcl/Tk
- UnrealScript        VHDL                VRML
- Velocity            Verilog             WINE Config
- XML                 XML (Debug)         Yacc/Bison
- ferite              progress            scilab
- txt2tags            xHarbour            xslt
- yacas
+
 
 =item B<plugins>
 
@@ -125,48 +130,17 @@ With this option you can specify additional formatting options.
 
 =over 4
 
-=item B<column>
-
-returns the column position in the line that is currently highlighted.
-
-=item B<contextParse>(I<$plugin>, I<$context>);
-
-Called by the plugins after a test succeeds. if B<$context> has following values:
-
- #pop       returns to the previous context, removes to top item in the stack. Can
-            also be specified as #pop#pop etc.
- #stay      does nothing.
- ##....     Switches to the plugin specified in .... and assumes it's basecontext.
- ....       Swtiches to the context specified in ....
-
 =item B<extensions>
 
 returns a reference to the extensions hash,
 
-=item B<firstnonspace>(I<$string>);
-
-returns true if the current line did not contain a non-spatial character so far and the first 
-character in B<$string> is also a spatial character.
-
-=item B<formatTable>
-
-sets and returns the instance variable B<format_table>. See also the option B<format_table>
-
-=item B<highlight>(I<$text>);
-
-highlights I<$text>. It does so by selecting the proper callback
-from the B<commands> hash and invoke it. It will do so untill
-$text has been reduced to an empty string. returns a paired list
-of snippets of text and the attribute with which they should be 
-highlighted.
-
-=item B<highlightText>(I<$text>);
-
-highlights I<$text> and reformats it using the B<format_table> and B<substitutions>
-
 =item B<language>(I<?$language?>)
 
 Sets and returns the current language that is highlighted. when setting the language a reset is also done.
+
+=item B<languageAutoSet>(I<$filename>);
+
+Suggests language name for the fiven file B<$filename>
 
 =item B<languageList>
 
@@ -176,93 +150,13 @@ returns a list of languages for which plugins have been defined.
 
 returns the module name of the plugin for B<$language>
 
-=item B<lastchar>
+=item B<languagePropose>(I<$filename>);
 
-return the last character that was processed.
-
-=item B<lastcharDeliminator>
-
-returns true if the last character processed was a deliminator.
-
-=item B<linesegment>
-
-returns the string of text in the current line that has been processed so far,
-
-=item B<linestart>
-
-returns true if processing is currently at the beginning of a line.
-
-=item B<out>(I<?\@highlightedlist?>);
-
-sets and returns the instance variable 'out'.
-
-=item B<pluginGet>(I<$language>);
-
-Returns a reference to a plugin object for the specified language. Creating an 
-instance if needed.
-
-=item B<reset>
-
-Resets the highlight engine to a fresh state, does not change the syntx.
+Suggests language name for the fiven file B<$filename>
 
 =item B<sections>
 
 Returns a reference to the sections hash.
-
-=item B<snippet>
-
-Contains the current snippet of text that will have one attribute. The moment the attribute 
-changes it will be parsed.
-
-=item B<snippetAppend>(I<$string>)
-
-appends I<$string> to the current snippet.
-
-=item B<snippetAttribute>(I<$attribute>)
-
-Sets and returns the used attribute.
-
-=item B<snippetForce>
-
-Forces the current snippet to be parsed.
-
-=item B<snippetParse>(I<$text>, I<?$attribute?>)
-
-If attribute is defined and differs from the current attribute it does a snippetForce and
-sets the current attribute to B<$attribute>. Then it does a snippetAppend of B<$text>
-
-=item B<stack>
-
-sets and returns the instance variable 'stack', a reference to an array
-
-=item B<stackPull>
-
-retrieves the element that is on top of the stack, decrements stacksize by 1.
-
-=item B<stackPush>(I<$tagname>);
-
-puts I<$tagname> on top of the stack, increments stacksize by 1
-
-=item B<stackTop>
-
-Retrieves the element that is on top of the stack.
-
-=item B<stateCompare>(I<\@state>)
-
-Compares two lists, \@state and the stack. returns true if they
-match.
-
-=item B<stateGet>
-
-Returns a list containing the entire stack.
-
-=item B<stateSet>(I<@list>)
-
-Accepts I<@list> as the current stack.
-
-=item B<substitutions>
-
-sets and returns a reference to the substitutions hash.
 
 =back
 
@@ -280,6 +174,129 @@ following additional attributes: B<BString>, B<IString>, B<Operator>, B<Reserved
 modified the XML files so that each highlight mode would get it's own attribute. In quite a few cases
 still not enough attributes were defined. So in some languages different modes have the same attribute.
 
+=head1 PLUGINS
+
+Below an overview of existing plugins. All have been tested on use and can be created. The ones for which no testfile
+is available are marked untested. Those marked OK have highlighted the testfile without appearant mistakes. This does
+not mean that all bugs are shaken out. 
+
+ LANGUAGE            MODULE                   COMMENT
+ ********            ******                   ******
+ .desktop            Desktop                  OK
+ 4GL                 FourGL                   untested
+ 4GL-PER             FourGLminusPER           untested
+ AHDL                AHDL                     OK
+ ANSI C89            ANSI_C89                 untested
+ ASP                 ASP                      OK
+ AVR Assembler       AVR_Assembler            seems to have issues
+ AWK                 AWK                      OK
+ Ada                 Ada                      untested
+                     Alerts                   OK hidden module
+ Asm6502             Asm6502                  seems to have issues
+ Bash                Bash                     seems to have issues
+ BibTeX              BibTex                   OK
+ C                   C                        untested
+ C#                  Cdash                    untested
+ C++                 Cplusplus                OK
+ CGiS                CGiS                     untested
+ CMake               CMake                    OK
+ CSS                 CSS                      OK
+ CUE Sheet           CUE_Sheet                untested
+ Cg                  Cg                       untested
+ ChangeLog           ChangeLog                untested
+ Cisco               Cisco                    untested
+ Clipper             Clipper                  OK
+ ColdFusion          ColdFusion               untested
+ Common Lisp         Common_Lisp              OK
+ Component-Pascal    ComponentminusPascal     untested
+ D                   D                        untested
+ Debian Changelog    Debian_Changelog         untested
+ Debian Control      Debian_Control           untested
+ Diff                Diff                     untested
+ Doxygen             Doxygen                  OK
+ E Language          E_Language               OK
+ Eiffel              Eiffel                   untested
+ Euphoria            Euphoria                 OK
+ Fortran             Fortran                  OK
+ GDL                 GDL                      untested
+ GLSL                GLSL                     OK
+ GNU Assembler       GNU_Assembler            untested
+ GNU Gettext         GNU_Gettext              untested
+ HTML                HTML                     OK
+ Haskell             Haskell                  OK
+ IDL                 IDL                      untested
+ ILERPG              ILERPG                   untested
+ INI Files           INI_Files                untested
+ Inform              Inform                   untested
+ Intel x86 (NASM)    Intel_X86_NASM           seems to have issues
+ JSP                 JSP                      OK
+ Java                Java                     OK
+ JavaScript          JavaScript               OK
+ Javadoc             Javadoc                  untested
+ KBasic              KBasic                   untested
+ LDIF                LDIF                     untested
+ LPC                 LPC                      untested
+ LaTeX               LaTex                    seems to have issues
+ Lex/Flex            Lex_Flex                 OK
+ LilyPond            LilyPond                 OK
+ Literate Haskell    Literate_Haskell         OK
+ Lua                 Lua                      untested
+ MAB-DB              MABminusDB               untested
+ MIPS Assembler      MIPS_Assembler           untested
+ Makefile            Makefile                 untested
+ Mason               Mason                    untested
+ Matlab              Matlab                   has issues
+ Modula-2            Modulaminus2             untested
+ Music Publisher     Music_Publisher          untested
+ Octave              Octave                   OK
+ PHP (HTML)          PHP_HTML                 OK
+                     PHP_PHP                  OK hidden module
+ POV-Ray             POV_Ray                  OK
+ Pascal              Pascal                   untested
+ Perl                Perl                     OK
+ PicAsm              PicAsm                   seems to have issues
+ Pike                Pike                     OK
+ PostScript          PostScript               OK
+ Prolog              Prolog                   untested
+ PureBasic           PureBasic                OK
+ Python              Python                   OK
+ Quake Script        Quake_Script             untested
+ R Script            R_Script                 untested
+ REXX                REXX                     untested
+ RPM Spec            RPM_Spec                 untested
+ RSI IDL             RSI_IDL                  untested
+ RenderMan RIB       RenderMan_RIB            OK
+ Ruby                Ruby                     has issues
+ SGML                SGML                     untested
+ SML                 SML                      untested
+ SQL                 SQL                      untested
+ SQL (MySQL)         SQL_MySQL                untested
+ SQL (PostgreSQL)    SQL_PostgreSQL           untested
+ Sather              Sather                   untested
+ Scheme              Scheme                   OK
+ Sieve               Sieve                    untested
+ Spice               Spice                    seems to have issues
+ Stata               Stata                    OK
+ TI Basic            TI_Basic                 untested
+ Tcl/Tk              TCL_Tk                   OK
+ UnrealScript        UnrealScript             OK
+ VHDL                VHDL                     untested
+ VRML                VRML                     seems to have issues
+ Velocity            Velocity                 untested
+ Verilog             Verilog                  untested
+ WINE Config         WINE_Config              untested
+ XML                 XML                      OK
+ XML (Debug)         XML_Debug                untested
+ Yacc/Bison          Yacc_Bison               OK
+ ferite              Ferite                   untested
+ progress            Progress                 untested
+ scilab              Scilab                   untested
+ txt2tags            Txt2tags                 untested
+ xHarbour            XHarbour                 OK
+ xslt                Xslt                     untested
+ yacas               Yacas                    untested
+
+
 =head1 BUGS
 
 Float is detected differently than in the Kate editor.
@@ -294,6 +311,16 @@ This module is mimicking the behaviour of the syntax highlight engine of the Kat
 a bug/mistake in the highlighting, please check if Kate behaves in the same way. If yes, the cause is
 likely to be found there.
 
+=head1 TO DO
+
+Rebuild the scripts i am using to generate the modules from xml files so they are more pro-actively tracking
+flaws in the build of the xml files like missing lists. Also regular expressions in the xml can be tested better 
+before used in plugins.
+
+Refine the testmethods in Syntax::Highlight::Engine::Kate::Template, so that choices for casesensitivity, 
+dynamic behaviour and lookahead can be determined at generate time of the plugin, might increase throughput.
+
+implement codefolding.
 
 =head1 ACKNOWLEDGEMENTS
 

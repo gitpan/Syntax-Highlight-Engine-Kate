@@ -49,7 +49,12 @@ my $hl = new Syntax::Highlight::Engine::Kate(
 );
 
 print "<html>\n<head>\n</head>\n<body>\n";
+
+my $text = "";
+
 while (my $in = <>) {
-	print $hl->highlightText($in);
+	$text = $text . $in;
+#	print $hl->highlightText($in);
 }
+print $hl->highlightText($text);
 print "</body>\n</html>\n"

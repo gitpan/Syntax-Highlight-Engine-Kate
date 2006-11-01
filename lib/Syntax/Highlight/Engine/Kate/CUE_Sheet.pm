@@ -1,4 +1,4 @@
-# Copyright (c) 2005 Hans Jeuken. All rights reserved.
+# Copyright (c) 2005 - 2006 Hans Jeuken. All rights reserved.
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
@@ -7,12 +7,12 @@
 
 #kate xml version 0.91
 #kate version 2.1
-#generated: Sun May 28 21:18:27 2006, localtime
+#generated: Wed Nov  1 21:17:45 2006, localtime
 
 package Syntax::Highlight::Engine::Kate::CUE_Sheet;
 
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use strict;
 use warnings;
@@ -87,6 +87,7 @@ sub new {
 	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
 	$self->basecontext('Normal');
 	$self->keywordscase(1);
+	$self->initialize;
 	bless ($self, $class);
 	return $self;
 }
@@ -119,7 +120,7 @@ sub parseNormal {
 		return 1
 	}
 	# type => Int
-	if ($self->testInt($text, 0, 0, undef, 0, '#stay', 'Decimal')) {
+	if ($self->testInt($text, 0, undef, 0, '#stay', 'Decimal')) {
 		return 1
 	}
 	# type => DetectChar

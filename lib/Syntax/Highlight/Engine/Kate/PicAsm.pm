@@ -1,4 +1,4 @@
-# Copyright (c) 2005 Hans Jeuken. All rights reserved.
+# Copyright (c) 2005 - 2006 Hans Jeuken. All rights reserved.
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
@@ -8,12 +8,12 @@
 #kate xml version 1.06
 #kate version 2.3
 #kate author Alain GIBAUD (alain.gibaud@univ-valenciennes.fr)
-#generated: Sun May 28 21:18:41 2006, localtime
+#generated: Wed Nov  1 21:17:51 2006, localtime
 
 package Syntax::Highlight::Engine::Kate::PicAsm;
 
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use strict;
 use warnings;
@@ -346,6 +346,7 @@ sub new {
 	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
 	$self->basecontext('normal');
 	$self->keywordscase(1);
+	$self->initialize;
 	bless ($self, $class);
 	return $self;
 }
@@ -475,7 +476,7 @@ sub parsenormal {
 		return 1
 	}
 	# type => Int
-	if ($self->testInt($text, 0, 0, undef, 0, '#stay', 'Non Based Numbers')) {
+	if ($self->testInt($text, 0, undef, 0, '#stay', 'Non Based Numbers')) {
 		return 1
 	}
 	# type => HlCChar

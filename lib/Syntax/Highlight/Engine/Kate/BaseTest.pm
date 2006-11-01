@@ -1,4 +1,4 @@
-# Copyright (c) 2005 Hans Jeuken. All rights reserved.
+# Copyright (c) 2005 - 2006 Hans Jeuken. All rights reserved.
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
@@ -8,12 +8,12 @@
 #kate xml version 0.12
 #kate version 2.3
 #kate author Hans Jeuken
-#generated: Sun May 28 21:18:50 2006, localtime
+#generated: Wed Nov  1 21:17:55 2006, localtime
 
 package Syntax::Highlight::Engine::Kate::BaseTest;
 
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use strict;
 use warnings;
@@ -189,6 +189,7 @@ sub new {
 	$self->deliminators('\\s||\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
 	$self->basecontext('Base');
 	$self->keywordscase(1);
+	$self->initialize;
 	bless ($self, $class);
 	return $self;
 }
@@ -355,7 +356,7 @@ sub parseChildRule_T {
 		return 1
 	}
 	# type => Int
-	if ($self->testInt($text, 0, 0, undef, 0, '#stay', 'Match')) {
+	if ($self->testInt($text, 0, undef, 0, '#stay', 'Match')) {
 		# type => StringDetect
 		if ($self->testStringDetect($text, 's', 1, 0, 0, undef, 0, '#stay', 'Match')) {
 			return 1
@@ -578,7 +579,7 @@ sub parseFloat_T {
 		return 1
 	}
 	# type => Float
-	if ($self->testFloat($text, 0, 0, undef, 0, '#stay', 'Match')) {
+	if ($self->testFloat($text, 0, undef, 0, '#stay', 'Match')) {
 		return 1
 	}
 	return 0;
@@ -693,7 +694,7 @@ sub parseInt_T {
 		return 1
 	}
 	# type => Int
-	if ($self->testInt($text, 0, 0, undef, 0, '#stay', 'Match')) {
+	if ($self->testInt($text, 0, undef, 0, '#stay', 'Match')) {
 		return 1
 	}
 	return 0;

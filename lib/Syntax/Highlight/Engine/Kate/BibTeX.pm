@@ -1,4 +1,4 @@
-# Copyright (c) 2005 Hans Jeuken. All rights reserved.
+# Copyright (c) 2005 - 2006 Hans Jeuken. All rights reserved.
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
@@ -8,12 +8,12 @@
 #kate xml version 1.13
 #kate version 2.4
 #kate author Jeroen Wijnhout (Jeroen.Wijnhout@kdemail.net)
-#generated: Sun May 28 21:18:23 2006, localtime
+#generated: Wed Nov  1 21:17:44 2006, localtime
 
 package Syntax::Highlight::Engine::Kate::BibTeX;
 
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use strict;
 use warnings;
@@ -72,6 +72,7 @@ sub new {
 	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~');
 	$self->basecontext('Normal');
 	$self->keywordscase(1);
+	$self->initialize;
 	bless ($self, $class);
 	return $self;
 }
