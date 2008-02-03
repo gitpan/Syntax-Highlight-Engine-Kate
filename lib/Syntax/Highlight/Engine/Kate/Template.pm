@@ -5,7 +5,7 @@
 package Syntax::Highlight::Engine::Kate::Template;
 
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.03';
 
 use strict;
 use Carp qw(cluck);
@@ -66,42 +66,80 @@ sub basecontext {
 }
 
 sub captured {
-	my $self = shift;
-	if (@_) { 
-		$self->{'captured'} = shift;
-#		print Dumper($self->{'captured'});
+	my ($self, $c) = @_;
+	if (defined($c)) {
+		my $t = $self->engine->stackTop;
+		my $n = 0;
+		my @o = ();
+		while (defined($c->[$n])) {
+			push @o, $c->[$n];
+			$n ++;
+		}
+		if (@o) {
+			$t->[2] = \@o;
+		}
 	};
-	return $self->{'captured'}
-#	my ($self, $c) = @_;
-#	if (defined($c)) {
-#		my $t = $self->engine->stackTop;
-#		my $n = 0;
-#		my @o = ();
-#		while (defined($c->[$n])) {
-#			push @o, $c->[$n];
-#			$n ++;
-#		}
-#		if (@o) {
-#			$t->[2] = \@o;
-#		}
-#	};
 }
 
 sub capturedGet {
 	my ($self, $num) = @_;
-	my $s = $self->captured;
-	if (defined $s) {
+	my $s = $self->engine->stack;
+	if (defined($s->[1])) {
+		my $c = $s->[1]->[2];
 		$num --;
-		if (defined($s->[$num])) {
-			return $s->[$num];
+		if (defined($c)) {
+			if (defined($c->[$num])) {
+				my $r = $c->[$num];
+				return $r;
+			} else {
+				warn "capture number $num not defined";
+			}
 		} else {
-			$self->logwarning("capture number $num not defined");
+			warn "dynamic substitution is called for but nothing to substitute\n";
+			return undef;
 		}
 	} else {
-		$self->logwarning("dynamic substitution is called for but nothing to substitute");
-		return undef;
+		warn "no parent context to take captures from";
 	}
 }
+
+#sub captured {
+#	my $self = shift;
+#	if (@_) { 
+#		$self->{'captured'} = shift;
+##		print Dumper($self->{'captured'});
+#	};
+#	return $self->{'captured'}
+##	my ($self, $c) = @_;
+##	if (defined($c)) {
+##		my $t = $self->engine->stackTop;
+##		my $n = 0;
+##		my @o = ();
+##		while (defined($c->[$n])) {
+##			push @o, $c->[$n];
+##			$n ++;
+##		}
+##		if (@o) {
+##			$t->[2] = \@o;
+##		}
+##	};
+#}
+#
+#sub capturedGet {
+#	my ($self, $num) = @_;
+#	my $s = $self->captured;
+#	if (defined $s) {
+#		$num --;
+#		if (defined($s->[$num])) {
+#			return $s->[$num];
+#		} else {
+#			$self->logwarning("capture number $num not defined");
+#		}
+#	} else {
+#		$self->logwarning("dynamic substitution is called for but nothing to substitute");
+#		return undef;
+#	}
+#}
 
 sub capturedParse {
 	my ($self, $string, $mode) = @_;
@@ -727,15 +765,7 @@ sub testKeyword {
 	my $self = shift;
 	my $text = shift;
 	my $list = shift;
-	my $insensitive = shift;
 	my $eng = $self->engine;
-	unless (defined($insensitive)) {
-		if ($self->keywordscase) {
-			$insensitive = 0;
-		} else {
-			$insensitive = 1;
-		}
-	}
 	my $deliminators = $self->deliminators;
 	if (($eng->lastcharDeliminator)  and ($$text =~ /^([^$deliminators]+)/)) {
 		my $match = $1;
@@ -743,7 +773,7 @@ sub testKeyword {
 		if (defined($l)) {
 			my @list = @$l;
 			my @rl = ();
-			unless ($insensitive) {
+			unless ($self->keywordscase) {
 				@rl = grep { (lc($match) eq lc($_)) } @list;
 			} else {
 				@rl = grep { ($match eq $_) } @list;
@@ -816,27 +846,39 @@ sub testRegExpr {
 		if ($sample =~ /$reg/ig) {
 			$pos = pos($sample);
 #			@cap = ($1, $2, $3, $4, $5, $6, $7, $8, $9);
-			my $r  = 1;
-			my $c  = 1;
-			my @cap = ();
-			while ($r) {
-				eval "if (defined\$$c) { push \@cap, \$$c } else { \$r = 0 }";
-				$c ++;
+#			my @cap = ();
+			if ($#-) {
+				no strict 'refs';
+				my @cap = map {$$_} 1 .. $#-;
+				$self->captured(\@cap)
 			}
-			if (@cap) { $self->captured(\@cap) };
+#			my $r  = 1;
+#			my $c  = 1;
+#			my @cap = ();
+#			while ($r) {
+#				eval "if (defined\$$c) { push \@cap, \$$c } else { \$r = 0 }";
+#				$c ++;
+#			}
+#			if (@cap) { $self->captured(\@cap) };
 		}
 	} else {
 		if ($sample =~ /$reg/g) {
 			$pos = pos($sample);
 #			@cap = ($1, $2, $3, $4, $5, $6, $7, $8, $9);
-			my $r  = 1;
-			my $c  = 1;
-			my @cap = ();
-			while ($r) {
-				eval "if (defined\$$c) { push \@cap, \$$c } else { \$r = 0 }";
-				$c ++;
+#			my @cap = ();
+			if ($#-) {
+				no strict 'refs';
+				my @cap = map {$$_} 1 .. $#-;
+				$self->captured(\@cap);
 			}
-			if (@cap) { $self->captured(\@cap) };
+#			my $r  = 1;
+#			my $c  = 1;
+#			my @cap = ();
+#			while ($r) {
+#				eval "if (defined\$$c) { push \@cap, \$$c } else { \$r = 0 }";
+#				$c ++;
+#			}
+#			if (@cap) { $self->captured(\@cap) };
 		}
 	}
 	if (defined($pos) and ($pos > 0)) {

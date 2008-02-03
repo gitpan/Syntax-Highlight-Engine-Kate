@@ -2,211 +2,236 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/rib.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'rib.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 1.00
 #kate version 2.3
 #kate author David Williams <david@david-williams.info>
-#generated: Wed Nov  1 21:17:52 2006, localtime
+#generated: Sun Feb  3 22:02:06 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::RenderMan_RIB;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Comment' => 'Comment',
-		'External Resource' => 'Keyword',
-		'Float' => 'Float',
-		'Geometric Primitive' => 'Keyword',
-		'Graphics State' => 'Keyword',
-		'Integer' => 'DecVal',
-		'Motion' => 'Keyword',
-		'Normal Text' => 'Normal',
-		'String' => 'String',
-	});
-	$self->listAdd('External Resources',
-		'ArchiveRecord',
-		'ErrorHandler',
-		'MakeBump',
-		'MakeCubeFaceEnvironment',
-		'MakeLatLongEnvironment',
-		'MakeTexture',
-	);
-	$self->listAdd('Geometric Primitives',
-		'Basis',
-		'Cylinder',
-		'Disk',
-		'GeneralPolygon',
-		'Geometry',
-		'Hyperboloid',
-		'NuPatch',
-		'ObjectBegin',
-		'ObjectEnd',
-		'ObjectInstance',
-		'Paraboloid',
-		'Patch',
-		'PointsGeneralPolygons',
-		'PointsPolygons',
-		'Polygon',
-		'Procedural',
-		'SolidBegin',
-		'SolidEnd',
-		'Sphere',
-		'Torus',
-	);
-	$self->listAdd('Graphics States',
-		'AreaLightSource',
-		'Attribute',
-		'AttributeBegin',
-		'AttributeEnd',
-		'Begin',
-		'Bound',
-		'Clipping',
-		'Color',
-		'ColorSamples',
-		'ConcatTransform',
-		'CoordinateSystem',
-		'CropWindow',
-		'Declare',
-		'DepthOfField',
-		'Detail',
-		'DetailRange',
-		'Displacement',
-		'Display',
-		'End',
-		'Exterior',
-		'Format',
-		'FrameAspectRatio',
-		'FrameBegin',
-		'FrameEnd',
-		'GeometricApproximation',
-		'Hider',
-		'Identity',
-		'Illuminance',
-		'Illuminate',
-		'Interior',
-		'LightSource',
-		'Matte',
-		'Opacity',
-		'Option',
-		'Orientation',
-		'Perspective',
-		'PixelFilter',
-		'PixelSamples',
-		'PixelVariance',
-		'Projection',
-		'Quantize',
-		'RelativeDetail',
-		'Rotate',
-		'Scale',
-		'ScreenWindow',
-		'ShadingInterpolation',
-		'ShadingRate',
-		'Shutter',
-		'Sides',
-		'Skew',
-		'Surface',
-		'TextureCoordinates',
-		'Transform',
-		'TransformBegin',
-		'TransformEnd',
-		'TransformPoints',
-		'Translate',
-		'WorldBegin',
-		'WorldEnd',
-		'version',
-	);
-	$self->listAdd('Motions',
-		'MotionBegin',
-		'MotionEnd',
-	);
-	$self->contextdata({
-		'Comment' => {
-			callback => \&parseComment,
-			attribute => 'Comment',
-			lineending => '#pop',
-		},
-		'Normal' => {
-			callback => \&parseNormal,
-			attribute => 'Normal Text',
-		},
-		'String' => {
-			callback => \&parseString,
-			attribute => 'String',
-			lineending => '#pop',
-		},
-	});
-	$self->deliminators('.():!+,-<=>%&*/;?[]^{|}~\\');
-	$self->basecontext('Normal');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Comment' => 'Comment',
+      'External Resource' => 'Keyword',
+      'Float' => 'Float',
+      'Geometric Primitive' => 'Keyword',
+      'Graphics State' => 'Keyword',
+      'Integer' => 'DecVal',
+      'Motion' => 'Keyword',
+      'Normal Text' => 'Normal',
+      'String' => 'String',
+   });
+   $self->listAdd('External Resources',
+      'ArchiveRecord',
+      'ErrorHandler',
+      'MakeBump',
+      'MakeCubeFaceEnvironment',
+      'MakeLatLongEnvironment',
+      'MakeTexture',
+   );
+   $self->listAdd('Geometric Primitives',
+      'Basis',
+      'Cylinder',
+      'Disk',
+      'GeneralPolygon',
+      'Geometry',
+      'Hyperboloid',
+      'NuPatch',
+      'ObjectBegin',
+      'ObjectEnd',
+      'ObjectInstance',
+      'Paraboloid',
+      'Patch',
+      'PointsGeneralPolygons',
+      'PointsPolygons',
+      'Polygon',
+      'Procedural',
+      'SolidBegin',
+      'SolidEnd',
+      'Sphere',
+      'Torus',
+   );
+   $self->listAdd('Graphics States',
+      'AreaLightSource',
+      'Attribute',
+      'AttributeBegin',
+      'AttributeEnd',
+      'Begin',
+      'Bound',
+      'Clipping',
+      'Color',
+      'ColorSamples',
+      'ConcatTransform',
+      'CoordinateSystem',
+      'CropWindow',
+      'Declare',
+      'DepthOfField',
+      'Detail',
+      'DetailRange',
+      'Displacement',
+      'Display',
+      'End',
+      'Exterior',
+      'Format',
+      'FrameAspectRatio',
+      'FrameBegin',
+      'FrameEnd',
+      'GeometricApproximation',
+      'Hider',
+      'Identity',
+      'Illuminance',
+      'Illuminate',
+      'Interior',
+      'LightSource',
+      'Matte',
+      'Opacity',
+      'Option',
+      'Orientation',
+      'Perspective',
+      'PixelFilter',
+      'PixelSamples',
+      'PixelVariance',
+      'Projection',
+      'Quantize',
+      'RelativeDetail',
+      'Rotate',
+      'Scale',
+      'ScreenWindow',
+      'ShadingInterpolation',
+      'ShadingRate',
+      'Shutter',
+      'Sides',
+      'Skew',
+      'Surface',
+      'TextureCoordinates',
+      'Transform',
+      'TransformBegin',
+      'TransformEnd',
+      'TransformPoints',
+      'Translate',
+      'WorldBegin',
+      'WorldEnd',
+      'version',
+   );
+   $self->listAdd('Motions',
+      'MotionBegin',
+      'MotionEnd',
+   );
+   $self->contextdata({
+      'Comment' => {
+         callback => \&parseComment,
+         attribute => 'Comment',
+         lineending => '#pop',
+      },
+      'Normal' => {
+         callback => \&parseNormal,
+         attribute => 'Normal Text',
+      },
+      'String' => {
+         callback => \&parseString,
+         attribute => 'String',
+         lineending => '#pop',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('Normal');
+   $self->keywordscase(1);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'RenderMan RIB';
+   return 'RenderMan RIB';
 }
 
 sub parseComment {
-	my ($self, $text) = @_;
-	return 0;
+   my ($self, $text) = @_;
+   return 0;
 };
 
 sub parseNormal {
-	my ($self, $text) = @_;
-	# type => keyword
-	if ($self->testKeyword($text, 'Graphics States', 0, 0, undef, 0, '#stay', 'Graphics State')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'Geometric Primitives', 0, 0, undef, 0, '#stay', 'Geometric Primitive')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'Motions', 0, 0, undef, 0, '#stay', 'Motion')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'External Resources', 0, 0, undef, 0, '#stay', 'External Resource')) {
-		return 1
-	}
-	# type => Float
-	if ($self->testFloat($text, 0, undef, 0, '#stay', 'Float')) {
-		return 1
-	}
-	# type => Int
-	if ($self->testInt($text, 0, undef, 0, '#stay', 'Integer')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, 'String', 'String')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '#', 0, 0, 0, undef, 0, 'Comment', 'Comment')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => 'Graphics States'
+   # attribute => 'Graphics State'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'Graphics States', 0, undef, 0, '#stay', 'Graphics State')) {
+      return 1
+   }
+   # String => 'Geometric Primitives'
+   # attribute => 'Geometric Primitive'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'Geometric Primitives', 0, undef, 0, '#stay', 'Geometric Primitive')) {
+      return 1
+   }
+   # String => 'Motions'
+   # attribute => 'Motion'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'Motions', 0, undef, 0, '#stay', 'Motion')) {
+      return 1
+   }
+   # String => 'External Resources'
+   # attribute => 'External Resource'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'External Resources', 0, undef, 0, '#stay', 'External Resource')) {
+      return 1
+   }
+   # attribute => 'Float'
+   # context => '#stay'
+   # type => 'Float'
+   if ($self->testFloat($text, 0, undef, 0, '#stay', 'Float')) {
+      return 1
+   }
+   # attribute => 'Integer'
+   # context => '#stay'
+   # type => 'Int'
+   if ($self->testInt($text, 0, undef, 0, '#stay', 'Integer')) {
+      return 1
+   }
+   # attribute => 'String'
+   # char => '"'
+   # context => 'String'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, 'String', 'String')) {
+      return 1
+   }
+   # attribute => 'Comment'
+   # char => '#'
+   # context => 'Comment'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '#', 0, 0, 0, undef, 0, 'Comment', 'Comment')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseString {
-	my ($self, $text) = @_;
-	# type => DetectChar
-	if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, '#pop', 'String')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'String'
+   # char => '"'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, '#pop', 'String')) {
+      return 1
+   }
+   return 0;
 };
 
 

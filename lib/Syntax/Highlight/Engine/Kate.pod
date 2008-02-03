@@ -176,125 +176,138 @@ still not enough attributes were defined. So in some languages different modes h
 
 =head1 PLUGINS
 
-Below an overview of existing plugins. All have been tested on use and can be created. The ones for which no testfile
-is available are marked untested. Those marked OK have highlighted the testfile without appearant mistakes. This does
+Below an overview of existing plugins. All have been tested on use and can be created. The ones for which no samplefile
+is available are marked. Those marked OK have highlighted the testfile without appearant mistakes. This does
 not mean that all bugs are shaken out. 
 
- LANGUAGE            MODULE                   COMMENT
- ********            ******                   ******
- .desktop            Desktop                  OK
- 4GL                 FourGL                   untested
- 4GL-PER             FourGLminusPER           untested
- AHDL                AHDL                     OK
- ANSI C89            ANSI_C89                 untested
- ASP                 ASP                      OK
- AVR Assembler       AVR_Assembler            seems to have issues
- AWK                 AWK                      OK
- Ada                 Ada                      untested
-                     Alerts                   OK hidden module
- Asm6502             Asm6502                  seems to have issues
- Bash                Bash                     seems to have issues
- BibTeX              BibTex                   OK
- C                   C                        untested
- C#                  Cdash                    untested
- C++                 Cplusplus                OK
- CGiS                CGiS                     untested
- CMake               CMake                    OK
- CSS                 CSS                      OK
- CUE Sheet           CUE_Sheet                untested
- Cg                  Cg                       untested
- ChangeLog           ChangeLog                untested
- Cisco               Cisco                    untested
- Clipper             Clipper                  OK
- ColdFusion          ColdFusion               untested
- Common Lisp         Common_Lisp              OK
- Component-Pascal    ComponentminusPascal     untested
- D                   D                        untested
- Debian Changelog    Debian_Changelog         untested
- Debian Control      Debian_Control           untested
- Diff                Diff                     untested
- Doxygen             Doxygen                  OK
- E Language          E_Language               OK
- Eiffel              Eiffel                   untested
- Euphoria            Euphoria                 OK
- Fortran             Fortran                  OK
- GDL                 GDL                      untested
- GLSL                GLSL                     OK
- GNU Assembler       GNU_Assembler            untested
- GNU Gettext         GNU_Gettext              untested
- HTML                HTML                     OK
- Haskell             Haskell                  OK
- IDL                 IDL                      untested
- ILERPG              ILERPG                   untested
- INI Files           INI_Files                untested
- Inform              Inform                   untested
- Intel x86 (NASM)    Intel_X86_NASM           seems to have issues
- JSP                 JSP                      OK
- Java                Java                     OK
- JavaScript          JavaScript               OK
- Javadoc             Javadoc                  untested
- KBasic              KBasic                   untested
- LDIF                LDIF                     untested
- LPC                 LPC                      untested
- LaTeX               LaTex                    seems to have issues
- Lex/Flex            Lex_Flex                 OK
- LilyPond            LilyPond                 OK
- Literate Haskell    Literate_Haskell         OK
- Lua                 Lua                      untested
- MAB-DB              MABminusDB               untested
- MIPS Assembler      MIPS_Assembler           untested
- Makefile            Makefile                 untested
- Mason               Mason                    untested
- Matlab              Matlab                   has issues
- Modula-2            Modulaminus2             untested
- Music Publisher     Music_Publisher          untested
- Octave              Octave                   OK
- PHP (HTML)          PHP_HTML                 OK
-                     PHP_PHP                  OK hidden module
- POV-Ray             POV_Ray                  OK
- Pascal              Pascal                   untested
- Perl                Perl                     OK
- PicAsm              PicAsm                   seems to have issues
- Pike                Pike                     OK
- PostScript          PostScript               OK
- Prolog              Prolog                   untested
- PureBasic           PureBasic                OK
- Python              Python                   OK
- Quake Script        Quake_Script             untested
- R Script            R_Script                 untested
- REXX                REXX                     untested
- RPM Spec            RPM_Spec                 untested
- RSI IDL             RSI_IDL                  untested
- RenderMan RIB       RenderMan_RIB            OK
- Ruby                Ruby                     has issues
- SGML                SGML                     untested
- SML                 SML                      untested
- SQL                 SQL                      untested
- SQL (MySQL)         SQL_MySQL                untested
- SQL (PostgreSQL)    SQL_PostgreSQL           untested
- Sather              Sather                   untested
- Scheme              Scheme                   OK
- Sieve               Sieve                    untested
- Spice               Spice                    seems to have issues
- Stata               Stata                    OK
- TI Basic            TI_Basic                 untested
- Tcl/Tk              TCL_Tk                   OK
- UnrealScript        UnrealScript             OK
- VHDL                VHDL                     untested
- VRML                VRML                     seems to have issues
- Velocity            Velocity                 untested
- Verilog             Verilog                  untested
- WINE Config         WINE_Config              untested
- XML                 XML                      OK
- XML (Debug)         XML_Debug                untested
- Yacc/Bison          Yacc_Bison               OK
- ferite              Ferite                   untested
- progress            Progress                 untested
- scilab              Scilab                   untested
- txt2tags            Txt2tags                 untested
- xHarbour            XHarbour                 OK
- xslt                Xslt                     untested
- yacas               Yacas                    untested
+ LANGUAGE             MODULE                   COMMENT
+ ********             ******                   ******
+ .desktop             Desktop                  OK
+ 4GL                  FourGL                   No sample file
+ 4GL-PER              FourGLminusPER           No sample file
+ ABC                  ABC                      OK
+ AHDL                 AHDL                     OK
+ ANSI C89             ANSI_C89                 No sample file
+ ASP                  ASP                      OK
+ AVR Assembler        AVR_Assembler            OK
+ AWK                  AWK                      OK
+ Ada                  Ada                      No sample file
+                      Alerts                   OK hidden module
+ Ansys                Ansys                    No sample file
+ Apache Configuration Apache_Configuration     No sample file
+ Asm6502              Asm6502                  No sample file
+ Bash                 Bash                     OK
+ BibTeX               BibTex                   OK
+ C                    C                        No sample file
+ C#                   Cdash                    No sample file
+ C++                  Cplusplus                OK
+ CGiS                 CGiS                     No sample file
+ CMake                CMake                    OK
+ CSS                  CSS                      OK
+ CUE Sheet            CUE_Sheet                No sample file
+ Cg                   Cg                       No sample file
+ ChangeLog            ChangeLog                No sample file
+ Cisco                Cisco                    No sample file
+ Clipper              Clipper                  OK
+ ColdFusion           ColdFusion               No sample file
+ Common Lisp          Common_Lisp              OK
+ Component-Pascal     ComponentminusPascal     No sample file
+ D                    D                        No sample file
+ Debian Changelog     Debian_Changelog         No sample file
+ Debian Control       Debian_Control           No sample file
+ Diff                 Diff                     No sample file
+ Doxygen              Doxygen                  OK
+ E Language           E_Language               OK
+ Eiffel               Eiffel                   No sample file
+ Email                Email                    OK
+ Euphoria             Euphoria                 OK
+ Fortran              Fortran                  OK
+ FreeBASIC            FreeBASIC                No sample file
+ GDL                  GDL                      No sample file
+ GLSL                 GLSL                     OK
+ GNU Assembler        GNU_Assembler            No sample file
+ GNU Gettext          GNU_Gettext              No sample file
+ HTML                 HTML                     OK
+ Haskell              Haskell                  OK
+ IDL                  IDL                      No sample file
+ ILERPG               ILERPG                   No sample file
+ INI Files            INI_Files                No sample file
+ Inform               Inform                   No sample file
+ Intel x86 (NASM)     Intel_X86_NASM           seems to have issues
+ JSP                  JSP                      OK
+ Java                 Java                     OK
+ JavaScript           JavaScript               OK
+ Javadoc              Javadoc                  No sample file
+ KBasic               KBasic                   No sample file
+ Kate File Template   Kate_File_Template       No sample file
+ LDIF                 LDIF                     No sample file
+ LPC                  LPC                      No sample file
+ LaTeX                LaTex                    OK
+ Lex/Flex             Lex_Flex                 OK
+ LilyPond             LilyPond                 OK
+ Literate Haskell     Literate_Haskell         OK
+ Lua                  Lua                      No sample file
+ M3U                  M3U                      OK
+ MAB-DB               MABminusDB               No sample file
+ MIPS Assembler       MIPS_Assembler           No sample file
+ Makefile             Makefile                 No sample file
+ Mason                Mason                    No sample file
+ Matlab               Matlab                   has issues
+ Modula-2             Modulaminus2             No sample file
+ Music Publisher      Music_Publisher          No sample file
+ Octave               Octave                   OK
+ PHP (HTML)           PHP_HTML                 OK
+                      PHP_PHP                  OK hidden module
+ POV-Ray              POV_Ray                  OK
+ Pascal               Pascal                   No sample file
+ Perl                 Perl                     OK
+ PicAsm               PicAsm                   OK
+ Pike                 Pike                     OK
+ PostScript           PostScript               OK
+ Prolog               Prolog                   No sample file
+ PureBasic            PureBasic                OK
+ Python               Python                   OK
+ Quake Script         Quake_Script             No sample file
+ R Script             R_Script                 No sample file
+ REXX                 REXX                     No sample file
+ RPM Spec             RPM_Spec                 No sample file
+ RSI IDL              RSI_IDL                  No sample file
+ RenderMan RIB        RenderMan_RIB            OK
+ Ruby                 Ruby                     OK
+ SGML                 SGML                     No sample file
+ SML                  SML                      No sample file
+ SQL                  SQL                      No sample file
+ SQL (MySQL)          SQL_MySQL                No sample file
+ SQL (PostgreSQL)     SQL_PostgreSQL           No sample file
+ Sather               Sather                   No sample file
+ Scheme               Scheme                   OK
+ Sieve                Sieve                    No sample file
+ Spice                Spice                    OK
+ Stata                Stata                    OK
+ TI Basic             TI_Basic                 No sample file
+ TaskJuggler          TaskJuggler              No sample file
+ Tcl/Tk               TCL_Tk                   OK
+ UnrealScript         UnrealScript             OK
+ VHDL                 VHDL                     No sample file
+ VRML                 VRML                     OK
+ Velocity             Velocity                 No sample file
+ Verilog              Verilog                  No sample file
+ WINE Config          WINE_Config              No sample file
+ Wikimedia            Wikimedia                No sample file
+ XML                  XML                      OK
+ XML (Debug)          XML_Debug                No sample file
+ Yacc/Bison           Yacc_Bison               OK
+ de_DE                De_DE                    No sample file
+ en_EN                En_EN                    No sample file
+ ferite               Ferite                   No sample file
+ nl                   Nl                       No sample file
+ progress             Progress                 No sample file
+ scilab               Scilab                   No sample file
+ txt2tags             Txt2tags                 No sample file
+ x.org Configuration  X_org_Configuration      No sample file
+ xHarbour             XHarbour                 OK
+ xslt                 Xslt                     No sample file
+ yacas                Yacas                    No sample file
 
 
 =head1 BUGS
@@ -320,7 +333,7 @@ before used in plugins.
 Refine the testmethods in Syntax::Highlight::Engine::Kate::Template, so that choices for casesensitivity, 
 dynamic behaviour and lookahead can be determined at generate time of the plugin, might increase throughput.
 
-implement codefolding.
+Implement codefolding.
 
 =head1 ACKNOWLEDGEMENTS
 

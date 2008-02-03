@@ -2,198 +2,282 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/debiancontrol.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'debiancontrol.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 0.82
 #kate version 2.4
-#generated: Wed Nov  1 21:17:46 2006, localtime
+#generated: Sun Feb  3 22:02:04 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::Debian_Control;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Email' => 'Others',
-		'Keyword' => 'Keyword',
-		'Normal Text' => 'Normal',
-		'Value' => 'DataType',
-		'Variable' => 'Others',
-		'Version' => 'DecVal',
-	});
-	$self->contextdata({
-		'Constrain' => {
-			callback => \&parseConstrain,
-			attribute => 'Version',
-		},
-		'DependencyField' => {
-			callback => \&parseDependencyField,
-			attribute => 'Value',
-			lineending => '#pop',
-		},
-		'Field' => {
-			callback => \&parseField,
-			attribute => 'Value',
-			lineending => '#pop',
-		},
-		'Variable' => {
-			callback => \&parseVariable,
-			attribute => 'Variable',
-			lineending => '#pop',
-		},
-		'noname' => {
-			callback => \&parsenoname,
-			attribute => 'Normal Text',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('noname');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Email' => 'Others',
+      'Keyword' => 'Keyword',
+      'Normal Text' => 'Normal',
+      'Value' => 'DataType',
+      'Variable' => 'Others',
+      'Version' => 'DecVal',
+   });
+   $self->contextdata({
+      'Constrain' => {
+         callback => \&parseConstrain,
+         attribute => 'Version',
+      },
+      'DependencyField' => {
+         callback => \&parseDependencyField,
+         attribute => 'Value',
+         lineending => '#pop',
+      },
+      'Field' => {
+         callback => \&parseField,
+         attribute => 'Value',
+         lineending => '#pop',
+      },
+      'Variable' => {
+         callback => \&parseVariable,
+         attribute => 'Variable',
+         lineending => '#pop',
+      },
+      'noname' => {
+         callback => \&parsenoname,
+         attribute => 'Normal Text',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('noname');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'Debian Control';
+   return 'Debian Control';
 }
 
 sub parseConstrain {
-	my ($self, $text) = @_;
-	# type => Detect2Chars
-	if ($self->testDetect2Chars($text, '$', '{', 0, 0, 0, undef, 0, 'Variable', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '[!<=>]', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, ')', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, ']', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Keyword'
+   # char => '$'
+   # char1 => '{'
+   # context => 'Variable'
+   # type => 'Detect2Chars'
+   if ($self->testDetect2Chars($text, '$', '{', 0, 0, 0, undef, 0, 'Variable', 'Keyword')) {
+      return 1
+   }
+   # String => '[!<=>]'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '[!<=>]', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # attribute => 'Keyword'
+   # char => ')'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, ')', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
+      return 1
+   }
+   # attribute => 'Keyword'
+   # char => ']'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, ']', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseDependencyField {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '<.*@.*>', 0, 0, 0, undef, 0, '#stay', 'Email')) {
-		return 1
-	}
-	# type => Detect2Chars
-	if ($self->testDetect2Chars($text, '$', '{', 0, 0, 0, undef, 0, 'Variable', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '[,\\|]', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '(', 0, 0, 0, undef, 0, 'Constrain', 'Keyword')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '[', 0, 0, 0, undef, 0, 'Constrain', 'Keyword')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '<.*@.*>'
+   # attribute => 'Email'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '<.*@.*>', 0, 0, 0, undef, 0, '#stay', 'Email')) {
+      return 1
+   }
+   # attribute => 'Keyword'
+   # char => '$'
+   # char1 => '{'
+   # context => 'Variable'
+   # type => 'Detect2Chars'
+   if ($self->testDetect2Chars($text, '$', '{', 0, 0, 0, undef, 0, 'Variable', 'Keyword')) {
+      return 1
+   }
+   # String => '[,\|]'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '[,\\|]', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # attribute => 'Keyword'
+   # char => '('
+   # context => 'Constrain'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '(', 0, 0, 0, undef, 0, 'Constrain', 'Keyword')) {
+      return 1
+   }
+   # attribute => 'Keyword'
+   # char => '['
+   # context => 'Constrain'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '[', 0, 0, 0, undef, 0, 'Constrain', 'Keyword')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseField {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '<.*@.*>', 0, 0, 0, undef, 0, '#stay', 'Email')) {
-		return 1
-	}
-	# type => Detect2Chars
-	if ($self->testDetect2Chars($text, '$', '{', 0, 0, 0, undef, 0, 'Variable', 'Keyword')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '<.*@.*>'
+   # attribute => 'Email'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '<.*@.*>', 0, 0, 0, undef, 0, '#stay', 'Email')) {
+      return 1
+   }
+   # attribute => 'Keyword'
+   # char => '$'
+   # char1 => '{'
+   # context => 'Variable'
+   # type => 'Detect2Chars'
+   if ($self->testDetect2Chars($text, '$', '{', 0, 0, 0, undef, 0, 'Variable', 'Keyword')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseVariable {
-	my ($self, $text) = @_;
-	# type => DetectChar
-	if ($self->testDetectChar($text, '}', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Keyword'
+   # char => '}'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '}', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parsenoname {
-	my ($self, $text) = @_;
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Depends:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Recommends:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Suggests:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Conflicts:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Provides:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Replaces:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Enhances:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Pre-Depends:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Build-Depends:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Build-Depends-Indep:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Build-Conflicts:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => StringDetect
-	if ($self->testStringDetect($text, 'Build-Conflicts-Indep:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '[^ ]*?:', 0, 0, 0, 0, 0, 'Field', 'Keyword')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, ' ', 0, 0, 0, 0, 0, 'Field', 'Value')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => 'Depends:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Depends:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Recommends:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Recommends:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Suggests:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Suggests:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Conflicts:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Conflicts:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Provides:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Provides:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Replaces:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Replaces:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Enhances:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Enhances:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Pre-Depends:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Pre-Depends:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Build-Depends:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Build-Depends:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Build-Depends-Indep:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Build-Depends-Indep:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Build-Conflicts:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Build-Conflicts:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => 'Build-Conflicts-Indep:'
+   # attribute => 'Keyword'
+   # context => 'DependencyField'
+   # type => 'StringDetect'
+   if ($self->testStringDetect($text, 'Build-Conflicts-Indep:', 0, 0, 0, undef, 0, 'DependencyField', 'Keyword')) {
+      return 1
+   }
+   # String => '[^ ]*:'
+   # attribute => 'Keyword'
+   # column => '0'
+   # context => 'Field'
+   # minimal => 'true'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '[^ ]*?:', 0, 0, 0, 0, 0, 'Field', 'Keyword')) {
+      return 1
+   }
+   # attribute => 'Value'
+   # char => ' '
+   # column => '0'
+   # context => 'Field'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, ' ', 0, 0, 0, 0, 0, 'Field', 'Value')) {
+      return 1
+   }
+   return 0;
 };
 
 

@@ -2,108 +2,142 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/gettext.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'gettext.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
-#kate xml version 1.01
+#kate xml version 1.03
 #kate version 2.4
 #kate author Dominik Haumann (dhdev@gmx.de)
-#generated: Wed Nov  1 21:17:47 2006, localtime
+#generated: Sun Feb  3 22:02:05 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::GNU_Gettext;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Automatic Comment' => 'Comment',
-		'Char' => 'Char',
-		'Flag' => 'Comment',
-		'Index' => 'DecVal',
-		'Keyword' => 'Keyword',
-		'Normal Text' => 'Normal',
-		'Reference' => 'Comment',
-		'String' => 'String',
-		'Translator Comment' => 'Comment',
-	});
-	$self->contextdata({
-		'Normal' => {
-			callback => \&parseNormal,
-			attribute => 'Normal Text',
-		},
-		'String' => {
-			callback => \&parseString,
-			attribute => 'String',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('Normal');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Automatic Comment' => 'Comment',
+      'Char' => 'Char',
+      'Flag' => 'Comment',
+      'Index' => 'DecVal',
+      'Keyword' => 'Keyword',
+      'Normal Text' => 'Normal',
+      'Reference' => 'Comment',
+      'String' => 'String',
+      'Translator Comment' => 'Comment',
+   });
+   $self->contextdata({
+      'Normal' => {
+         callback => \&parseNormal,
+         attribute => 'Normal Text',
+      },
+      'String' => {
+         callback => \&parseString,
+         attribute => 'String',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('Normal');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'GNU Gettext';
+   return 'GNU Gettext';
 }
 
 sub parseNormal {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '^(msgid_plural|msgid|msgstr)', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '#\\..*$', 0, 0, 0, 0, 0, '#stay', 'Automatic Comment')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '#:.*$', 0, 0, 0, 0, 0, '#stay', 'Reference')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '#,.*$', 0, 0, 0, 0, 0, '#stay', 'Flag')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '#.*$', 0, 0, 0, 0, 0, '#stay', 'Translator Comment')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\\\.', 0, 0, 0, undef, 0, '#stay', 'Char')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, 'String', 'String')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\[\\d+\\]', 0, 0, 0, undef, 0, '#stay', 'Index')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '^(msgid_plural|msgid|msgstr|msgctxt)'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '^(msgid_plural|msgid|msgstr|msgctxt)', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => '#\..*$'
+   # attribute => 'Automatic Comment'
+   # context => '#stay'
+   # firstNonSpace => 'true'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '#\\..*$', 0, 0, 0, undef, 1, '#stay', 'Automatic Comment')) {
+      return 1
+   }
+   # String => '#:.*$'
+   # attribute => 'Reference'
+   # context => '#stay'
+   # firstNonSpace => 'true'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '#:.*$', 0, 0, 0, undef, 1, '#stay', 'Reference')) {
+      return 1
+   }
+   # String => '#,.*$'
+   # attribute => 'Flag'
+   # context => '#stay'
+   # firstNonSpace => 'true'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '#,.*$', 0, 0, 0, undef, 1, '#stay', 'Flag')) {
+      return 1
+   }
+   # String => '#.*$'
+   # attribute => 'Translator Comment'
+   # context => '#stay'
+   # firstNonSpace => 'true'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '#.*$', 0, 0, 0, undef, 1, '#stay', 'Translator Comment')) {
+      return 1
+   }
+   # String => '\\.'
+   # attribute => 'Char'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\\\.', 0, 0, 0, undef, 0, '#stay', 'Char')) {
+      return 1
+   }
+   # attribute => 'String'
+   # char => '"'
+   # context => 'String'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, 'String', 'String')) {
+      return 1
+   }
+   # String => '\[\d+\]'
+   # attribute => 'Index'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\[\\d+\\]', 0, 0, 0, undef, 0, '#stay', 'Index')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseString {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\\\.', 0, 0, 0, undef, 0, '#stay', 'Char')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, '#pop', 'String')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '\\.'
+   # attribute => 'Char'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\\\.', 0, 0, 0, undef, 0, '#stay', 'Char')) {
+      return 1
+   }
+   # attribute => 'String'
+   # char => '"'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, '#pop', 'String')) {
+      return 1
+   }
+   return 0;
 };
 
 

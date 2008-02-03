@@ -2,95 +2,113 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/changelog.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'changelog.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 1.04
 #kate version 2.4
 #kate author Dominik Haumann (dhdev@gmx.de)
-#generated: Wed Nov  1 21:17:44 2006, localtime
+#generated: Sun Feb  3 22:02:04 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::ChangeLog;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Date' => 'DataType',
-		'E-Mail' => 'Others',
-		'Entry' => 'DecVal',
-		'Name' => 'Keyword',
-		'Normal Text' => 'Normal',
-	});
-	$self->contextdata({
-		'Normal' => {
-			callback => \&parseNormal,
-			attribute => 'Normal Text',
-		},
-		'entry' => {
-			callback => \&parseentry,
-			attribute => 'Normal Text',
-			lineending => '#pop',
-		},
-		'line' => {
-			callback => \&parseline,
-			attribute => 'Normal Text',
-			lineending => '#pop',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('Normal');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Date' => 'DataType',
+      'E-Mail' => 'Others',
+      'Entry' => 'DecVal',
+      'Name' => 'Keyword',
+      'Normal Text' => 'Normal',
+   });
+   $self->contextdata({
+      'Normal' => {
+         callback => \&parseNormal,
+         attribute => 'Normal Text',
+      },
+      'entry' => {
+         callback => \&parseentry,
+         attribute => 'Normal Text',
+         lineending => '#pop',
+      },
+      'line' => {
+         callback => \&parseline,
+         attribute => 'Normal Text',
+         lineending => '#pop',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('Normal');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'ChangeLog';
+   return 'ChangeLog';
 }
 
 sub parseNormal {
-	my ($self, $text) = @_;
-	# type => DetectChar
-	if ($self->testDetectChar($text, '*', 0, 0, 0, undef, 1, 'entry', 'Entry')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\d\\d\\d\\d\\s*-\\s*\\d\\d\\s*-\\s*\\d\\d\\s*', 0, 0, 0, 0, 0, 'line', 'Date')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Entry'
+   # char => '*'
+   # context => 'entry'
+   # firstNonSpace => 'true'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '*', 0, 0, 0, undef, 1, 'entry', 'Entry')) {
+      return 1
+   }
+   # String => '\d\d\d\d\s*-\s*\d\d\s*-\s*\d\d\s*'
+   # attribute => 'Date'
+   # column => '0'
+   # context => 'line'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\d\\d\\d\\d\\s*-\\s*\\d\\d\\s*-\\s*\\d\\d\\s*', 0, 0, 0, 0, 0, 'line', 'Date')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseentry {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '.*?:', 0, 0, 0, undef, 0, '#pop', 'Entry')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '.*:'
+   # attribute => 'Entry'
+   # context => '#pop'
+   # minimal => 'true'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '.*?:', 0, 0, 0, undef, 0, '#pop', 'Entry')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseline {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '(\\w\\s*)+', 0, 0, 0, undef, 0, '#stay', 'Name')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '<.*>\\s*$', 0, 0, 0, undef, 0, '#pop', 'E-Mail')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '(\w\s*)+'
+   # attribute => 'Name'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '(\\w\\s*)+', 0, 0, 0, undef, 0, '#stay', 'Name')) {
+      return 1
+   }
+   # String => '<.*>\s*$'
+   # attribute => 'E-Mail'
+   # context => '#pop'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '<.*>\\s*$', 0, 0, 0, undef, 0, '#pop', 'E-Mail')) {
+      return 1
+   }
+   return 0;
 };
 
 

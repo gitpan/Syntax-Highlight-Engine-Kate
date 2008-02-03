@@ -24,3 +24,13 @@ Rewrote testing, Windows OS should now be able to cope with the length of the
 test-harness commandline.
 
 Optimized testmethods in Template, gained some speed.
+
+
+0.03 Sun Feb 3 2008
+
+Fixed countless errors.
+
+added support for Ansys, Apache Configuration, Email, FreeBASIC, Kate File Template, 
+de_DE, en_EN, nl, M3U, Wikimedia, x.org Configuration
+ 
+No more 16 Mb output at make test

@@ -2,165 +2,184 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/kbasic.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'kbasic.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 1.02
 #kate version 2.1
-#generated: Wed Nov  1 21:17:49 2006, localtime
+#generated: Sun Feb  3 22:02:05 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::KBasic;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Comment' => 'Comment',
-		'Identifier' => 'Others',
-		'Keyword' => 'Keyword',
-		'Normal Text' => 'Normal',
-		'String' => 'String',
-		'Types' => 'DataType',
-	});
-	$self->listAdd('keywords',
-		'And',
-		'As',
-		'Close',
-		'Declare',
-		'Dim',
-		'Do',
-		'Else',
-		'End',
-		'Exit',
-		'Explicit',
-		'False',
-		'For',
-		'Function',
-		'Get',
-		'Global',
-		'Goto',
-		'If',
-		'Implements',
-		'In',
-		'Input',
-		'Let',
-		'Load',
-		'Loop',
-		'Next',
-		'Not',
-		'Open',
-		'Option',
-		'Or',
-		'Output',
-		'Print',
-		'Private',
-		'Property',
-		'Public',
-		'Put',
-		'Repeat',
-		'Seek',
-		'Set',
-		'Sub',
-		'Sub',
-		'Then',
-		'To',
-		'True',
-		'Unload',
-		'Until',
-		'Wend',
-		'While',
-		'Xor',
-	);
-	$self->listAdd('types',
-		'Boolean',
-		'Byte',
-		'Control',
-		'Currency',
-		'Double',
-		'Integer',
-		'Long',
-		'Object',
-		'Single',
-		'String',
-		'Variant',
-	);
-	$self->contextdata({
-		'Comment' => {
-			callback => \&parseComment,
-			attribute => 'Comment',
-			lineending => '#pop',
-		},
-		'Normal' => {
-			callback => \&parseNormal,
-			attribute => 'Normal Text',
-		},
-		'String' => {
-			callback => \&parseString,
-			attribute => 'String',
-			lineending => '#pop',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('Normal');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Comment' => 'Comment',
+      'Identifier' => 'Others',
+      'Keyword' => 'Keyword',
+      'Normal Text' => 'Normal',
+      'String' => 'String',
+      'Types' => 'DataType',
+   });
+   $self->listAdd('keywords',
+      'And',
+      'As',
+      'Close',
+      'Declare',
+      'Dim',
+      'Do',
+      'Else',
+      'End',
+      'Exit',
+      'Explicit',
+      'False',
+      'For',
+      'Function',
+      'Get',
+      'Global',
+      'Goto',
+      'If',
+      'Implements',
+      'In',
+      'Input',
+      'Let',
+      'Load',
+      'Loop',
+      'Next',
+      'Not',
+      'Open',
+      'Option',
+      'Or',
+      'Output',
+      'Print',
+      'Private',
+      'Property',
+      'Public',
+      'Put',
+      'Repeat',
+      'Seek',
+      'Set',
+      'Sub',
+      'Sub',
+      'Then',
+      'To',
+      'True',
+      'Unload',
+      'Until',
+      'Wend',
+      'While',
+      'Xor',
+   );
+   $self->listAdd('types',
+      'Boolean',
+      'Byte',
+      'Control',
+      'Currency',
+      'Double',
+      'Integer',
+      'Long',
+      'Object',
+      'Single',
+      'String',
+      'Variant',
+   );
+   $self->contextdata({
+      'Comment' => {
+         callback => \&parseComment,
+         attribute => 'Comment',
+         lineending => '#pop',
+      },
+      'Normal' => {
+         callback => \&parseNormal,
+         attribute => 'Normal Text',
+      },
+      'String' => {
+         callback => \&parseString,
+         attribute => 'String',
+         lineending => '#pop',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('Normal');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'KBasic';
+   return 'KBasic';
 }
 
 sub parseComment {
-	my ($self, $text) = @_;
-	return 0;
+   my ($self, $text) = @_;
+   return 0;
 };
 
 sub parseNormal {
-	my ($self, $text) = @_;
-	# type => keyword
-	if ($self->testKeyword($text, 'keywords', 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'types', 0, 0, undef, 0, '#stay', 'Identifier')) {
-		return 1
-	}
-	# type => Float
-	if ($self->testFloat($text, 0, undef, 0, '#stay', 'String')) {
-		return 1
-	}
-	# type => Int
-	if ($self->testInt($text, 0, undef, 0, '#stay', 'Types')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, 'quot;', 0, 0, 0, undef, 0, 'String', 'String')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '\'', 0, 0, 0, undef, 0, 'Comment', 'Comment')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => 'keywords'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'keywords', 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => 'types'
+   # attribute => 'Identifier'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'types', 0, undef, 0, '#stay', 'Identifier')) {
+      return 1
+   }
+   # attribute => 'String'
+   # context => '#stay'
+   # type => 'Float'
+   if ($self->testFloat($text, 0, undef, 0, '#stay', 'String')) {
+      return 1
+   }
+   # attribute => 'Types'
+   # context => '#stay'
+   # type => 'Int'
+   if ($self->testInt($text, 0, undef, 0, '#stay', 'Types')) {
+      return 1
+   }
+   # attribute => 'String'
+   # char => '"'
+   # context => 'String'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, 'String', 'String')) {
+      return 1
+   }
+   # attribute => 'Comment'
+   # char => '''
+   # context => 'Comment'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '\'', 0, 0, 0, undef, 0, 'Comment', 'Comment')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseString {
-	my ($self, $text) = @_;
-	# type => DetectChar
-	if ($self->testDetectChar($text, '\'', 0, 0, 0, undef, 0, '#pop', 'String')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'String'
+   # char => '''
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '\'', 0, 0, 0, undef, 0, '#pop', 'String')) {
+      return 1
+   }
+   return 0;
 };
 
 

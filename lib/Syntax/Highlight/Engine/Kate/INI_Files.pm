@@ -2,151 +2,179 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/ini.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'ini.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 1.0
 #kate author Jan Janssen (medhefgo@web.de)
-#generated: Wed Nov  1 21:17:48 2006, localtime
+#generated: Sun Feb  3 22:02:05 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::INI_Files;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Assignment' => 'Others',
-		'Comment' => 'Comment',
-		'Float' => 'Float',
-		'Int' => 'DecVal',
-		'Keyword' => 'Keyword',
-		'Normal Text' => 'DataType',
-		'Section' => 'Keyword',
-		'Value' => 'String',
-	});
-	$self->listAdd('keywords',
-		'Default',
-		'Defaults',
-		'E_ALL',
-		'E_COMPILE_ERROR',
-		'E_COMPILE_WARNING',
-		'E_CORE_ERROR',
-		'E_CORE_WARNING',
-		'E_ERROR',
-		'E_NOTICE',
-		'E_PARSE',
-		'E_STRICT',
-		'E_USER_ERROR',
-		'E_USER_NOTICE',
-		'E_USER_WARNING',
-		'E_WARNING',
-		'False',
-		'Localhost',
-		'No',
-		'Normal',
-		'Null',
-		'Off',
-		'On',
-		'True',
-		'Yes',
-	);
-	$self->contextdata({
-		'Comment' => {
-			callback => \&parseComment,
-			attribute => 'Comment',
-			lineending => '#pop',
-		},
-		'Value' => {
-			callback => \&parseValue,
-			attribute => 'Value',
-			lineending => '#pop',
-		},
-		'ini' => {
-			callback => \&parseini,
-			attribute => 'Normal Text',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('ini');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Assignment' => 'Others',
+      'Comment' => 'Comment',
+      'Float' => 'Float',
+      'Int' => 'DecVal',
+      'Keyword' => 'Keyword',
+      'Normal Text' => 'DataType',
+      'Section' => 'Keyword',
+      'Value' => 'String',
+   });
+   $self->listAdd('keywords',
+      'Default',
+      'Defaults',
+      'E_ALL',
+      'E_COMPILE_ERROR',
+      'E_COMPILE_WARNING',
+      'E_CORE_ERROR',
+      'E_CORE_WARNING',
+      'E_ERROR',
+      'E_NOTICE',
+      'E_PARSE',
+      'E_STRICT',
+      'E_USER_ERROR',
+      'E_USER_NOTICE',
+      'E_USER_WARNING',
+      'E_WARNING',
+      'False',
+      'Localhost',
+      'No',
+      'Normal',
+      'Null',
+      'Off',
+      'On',
+      'True',
+      'Yes',
+   );
+   $self->contextdata({
+      'Comment' => {
+         callback => \&parseComment,
+         attribute => 'Comment',
+         lineending => '#pop',
+      },
+      'Value' => {
+         callback => \&parseValue,
+         attribute => 'Value',
+         lineending => '#pop',
+      },
+      'ini' => {
+         callback => \&parseini,
+         attribute => 'Normal Text',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('ini');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'INI Files';
+   return 'INI Files';
 }
 
 sub parseComment {
-	my ($self, $text) = @_;
-	# type => DetectSpaces
-	if ($self->testDetectSpaces($text, 0, undef, 0, '#stay', undef)) {
-		return 1
-	}
-	# type => IncludeRules
-	if ($self->includePlugin('Alerts', $text)) {
-		return 1
-	}
-	# type => DetectIdentifier
-	if ($self->testDetectIdentifier($text, 0, undef, 0, '#stay', undef)) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # type => 'DetectSpaces'
+   if ($self->testDetectSpaces($text, 0, undef, 0, '#stay', undef)) {
+      return 1
+   }
+   # context => '##Alerts'
+   # type => 'IncludeRules'
+   if ($self->includePlugin('Alerts', $text)) {
+      return 1
+   }
+   # type => 'DetectIdentifier'
+   if ($self->testDetectIdentifier($text, 0, undef, 0, '#stay', undef)) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseValue {
-	my ($self, $text) = @_;
-	# type => Float
-	if ($self->testFloat($text, 0, undef, 0, '#stay', 'Float')) {
-		return 1
-	}
-	# type => Int
-	if ($self->testInt($text, 0, undef, 0, '#stay', 'Int')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'keywords', 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, ';.*$', 0, 0, 0, undef, 0, '#pop', 'Comment')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '#.*$', 0, 0, 0, undef, 0, '#pop', 'Comment')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Float'
+   # type => 'Float'
+   if ($self->testFloat($text, 0, undef, 0, '#stay', 'Float')) {
+      return 1
+   }
+   # attribute => 'Int'
+   # type => 'Int'
+   if ($self->testInt($text, 0, undef, 0, '#stay', 'Int')) {
+      return 1
+   }
+   # String => 'keywords'
+   # attribute => 'Keyword'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'keywords', 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => ';.*$'
+   # attribute => 'Comment'
+   # context => '#pop'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, ';.*$', 0, 0, 0, undef, 0, '#pop', 'Comment')) {
+      return 1
+   }
+   # String => '#.*$'
+   # attribute => 'Comment'
+   # context => '#pop'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '#.*$', 0, 0, 0, undef, 0, '#pop', 'Comment')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseini {
-	my ($self, $text) = @_;
-	# type => RangeDetect
-	if ($self->testRangeDetect($text, '[', ']', 0, 0, undef, 0, '#pop', 'Section')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '=', 0, 0, 0, undef, 0, 'Value', 'Assignment')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, ';', 0, 0, 0, undef, 1, 'Comment', 'Comment')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '#', 0, 0, 0, undef, 1, 'Comment', 'Comment')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Section'
+   # beginRegion => 'Section'
+   # char => '['
+   # char1 => ']'
+   # context => '#pop'
+   # endRegion => 'Section'
+   # type => 'RangeDetect'
+   if ($self->testRangeDetect($text, '[', ']', 0, 0, undef, 0, '#pop', 'Section')) {
+      return 1
+   }
+   # attribute => 'Assignment'
+   # char => '='
+   # context => 'Value'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '=', 0, 0, 0, undef, 0, 'Value', 'Assignment')) {
+      return 1
+   }
+   # attribute => 'Comment'
+   # char => ';'
+   # context => 'Comment'
+   # firstNonSpace => 'true'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, ';', 0, 0, 0, undef, 1, 'Comment', 'Comment')) {
+      return 1
+   }
+   # attribute => 'Comment'
+   # char => '#'
+   # context => 'Comment'
+   # firstNonSpace => 'true'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '#', 0, 0, 0, undef, 1, 'Comment', 'Comment')) {
+      return 1
+   }
+   return 0;
 };
 
 

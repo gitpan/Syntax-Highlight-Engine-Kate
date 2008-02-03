@@ -2,90 +2,122 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/mab.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'mab.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 1.03
 #kate version 2.4
-#generated: Wed Nov  1 21:17:49 2006, localtime
+#generated: Sun Feb  3 22:02:05 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::MABminusDB;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Comment' => 'Comment',
-		'Database Header' => 'Operator',
-		'Header Medium' => 'Reserved',
-		'Header Piece' => 'Keyword',
-		'Mab Comment Description' => 'Others',
-		'Mab Comment Type' => 'Alert',
-		'Mab I Field' => 'DecVal',
-		'Mab M Field' => 'Float',
-		'Normal Text' => 'Normal',
-	});
-	$self->contextdata({
-		'Section' => {
-			callback => \&parseSection,
-			attribute => 'Normal Text',
-		},
-	});
-	$self->deliminators('.():!+,-<=>%&*/;?[]^{|}~\\');
-	$self->basecontext('Section');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Comment' => 'Comment',
+      'Database Header' => 'Operator',
+      'Header Medium' => 'Reserved',
+      'Header Piece' => 'Keyword',
+      'Mab Comment Description' => 'Others',
+      'Mab Comment Type' => 'Alert',
+      'Mab I Field' => 'DecVal',
+      'Mab M Field' => 'Float',
+      'Normal Text' => 'Normal',
+   });
+   $self->contextdata({
+      'Section' => {
+         callback => \&parseSection,
+         attribute => 'Normal Text',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('Section');
+   $self->keywordscase(1);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'MAB-DB';
+   return 'MAB-DB';
 }
 
 sub parseSection {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*I [a-zA-Z0-9]* ', 0, 0, 0, 0, 0, '#stay', 'Mab I Field')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*\\*\\*\\**E.*', 0, 0, 0, 0, 0, '#stay', 'Header Piece')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*\\*\\*\\**M.*', 0, 0, 0, 0, 0, '#stay', 'Header Medium')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*\\*\\*\\* BIBLIOTHECA.*', 0, 0, 0, 0, 0, '#stay', 'Database Header')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*M [a-zA-Z0-9]* ', 0, 0, 0, 0, 0, '#stay', 'Mab M Field')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*X TYP .*', 0, 0, 0, 0, 0, '#stay', 'Mab Comment Description')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*X DESC .*', 0, 0, 0, 0, 0, '#stay', 'Mab Comment Type')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*X .*', 0, 0, 0, 0, 0, '#stay', 'Comment')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '\*I [a-zA-Z0-9]* '
+   # attribute => 'Mab I Field'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*I [a-zA-Z0-9]* ', 0, 0, 0, 0, 0, '#stay', 'Mab I Field')) {
+      return 1
+   }
+   # String => '\*\*\*\**E.*'
+   # attribute => 'Header Piece'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*\\*\\*\\**E.*', 0, 0, 0, 0, 0, '#stay', 'Header Piece')) {
+      return 1
+   }
+   # String => '\*\*\*\**M.*'
+   # attribute => 'Header Medium'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*\\*\\*\\**M.*', 0, 0, 0, 0, 0, '#stay', 'Header Medium')) {
+      return 1
+   }
+   # String => '\*\*\*\* BIBLIOTHECA.*'
+   # attribute => 'Database Header'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*\\*\\*\\* BIBLIOTHECA.*', 0, 0, 0, 0, 0, '#stay', 'Database Header')) {
+      return 1
+   }
+   # String => '\*M [a-zA-Z0-9]* '
+   # attribute => 'Mab M Field'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*M [a-zA-Z0-9]* ', 0, 0, 0, 0, 0, '#stay', 'Mab M Field')) {
+      return 1
+   }
+   # String => '\*X TYP .*'
+   # attribute => 'Mab Comment Description'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*X TYP .*', 0, 0, 0, 0, 0, '#stay', 'Mab Comment Description')) {
+      return 1
+   }
+   # String => '\*X DESC .*'
+   # attribute => 'Mab Comment Type'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*X DESC .*', 0, 0, 0, 0, 0, '#stay', 'Mab Comment Type')) {
+      return 1
+   }
+   # String => '\*X .*'
+   # attribute => 'Comment'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*X .*', 0, 0, 0, 0, 0, '#stay', 'Comment')) {
+      return 1
+   }
+   return 0;
 };
 
 

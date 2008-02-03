@@ -2,136 +2,172 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/debianchangelog.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'debianchangelog.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 0.62
 #kate version 2.4
-#generated: Wed Nov  1 21:17:45 2006, localtime
+#generated: Sun Feb  3 22:02:04 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::Debian_Changelog;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Bug' => 'DataType',
-		'Data' => 'DataType',
-		'Email' => 'Others',
-		'Keyword' => 'Keyword',
-		'Normal Text' => 'Normal',
-		'Version' => 'DataType',
-	});
-	$self->listAdd('distributions',
-		'experimental',
-		'frozen',
-		'stable',
-		'testing',
-		'unstable',
-	);
-	$self->listAdd('keywords',
-		'urgency',
-	);
-	$self->listAdd('urgencies',
-		'bug',
-		'emergency',
-		'high',
-		'low',
-		'medium',
-	);
-	$self->contextdata({
-		'Head' => {
-			callback => \&parseHead,
-			attribute => 'Normal Text',
-			lineending => '#pop',
-		},
-		'Version' => {
-			callback => \&parseVersion,
-			attribute => 'Version',
-			lineending => '#pop',
-		},
-		'noname' => {
-			callback => \&parsenoname,
-			attribute => 'Normal Text',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('noname');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Bug' => 'DataType',
+      'Data' => 'DataType',
+      'Email' => 'Others',
+      'Keyword' => 'Keyword',
+      'Normal Text' => 'Normal',
+      'Version' => 'DataType',
+   });
+   $self->listAdd('distributions',
+      'experimental',
+      'frozen',
+      'stable',
+      'testing',
+      'unstable',
+   );
+   $self->listAdd('keywords',
+      'urgency',
+   );
+   $self->listAdd('urgencies',
+      'bug',
+      'emergency',
+      'high',
+      'low',
+      'medium',
+   );
+   $self->contextdata({
+      'Head' => {
+         callback => \&parseHead,
+         attribute => 'Normal Text',
+         lineending => '#pop',
+      },
+      'Version' => {
+         callback => \&parseVersion,
+         attribute => 'Version',
+         lineending => '#pop',
+      },
+      'noname' => {
+         callback => \&parsenoname,
+         attribute => 'Normal Text',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('noname');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'Debian Changelog';
+   return 'Debian Changelog';
 }
 
 sub parseHead {
-	my ($self, $text) = @_;
-	# type => DetectChar
-	if ($self->testDetectChar($text, '(', 0, 0, 0, undef, 0, 'Version', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '[,;=]', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'keywords', 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'distributions', 0, 0, undef, 0, '#stay', 'Data')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'urgencies', 0, 0, undef, 0, '#stay', 'Data')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Keyword'
+   # char => '('
+   # context => 'Version'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '(', 0, 0, 0, undef, 0, 'Version', 'Keyword')) {
+      return 1
+   }
+   # String => '[,;=]'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '[,;=]', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => 'keywords'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'keywords', 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => 'distributions'
+   # attribute => 'Data'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'distributions', 0, undef, 0, '#stay', 'Data')) {
+      return 1
+   }
+   # String => 'urgencies'
+   # attribute => 'Data'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'urgencies', 0, undef, 0, '#stay', 'Data')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseVersion {
-	my ($self, $text) = @_;
-	# type => DetectChar
-	if ($self->testDetectChar($text, ')', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Keyword'
+   # char => ')'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, ')', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parsenoname {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '[^ ]*', 0, 0, 0, 0, 0, 'Head', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '<.*@.*>', 0, 0, 0, undef, 0, '#stay', 'Email')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, ' \\-\\-', 0, 0, 0, 0, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '  \\*', 0, 0, 0, 0, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '[Cc][Ll][Oo][Ss][Ee][Ss]:[\\s]*(([Bb][Uu][Gg]\\s*)?#\\s*\\d+)(\\s*, *([Bb[Uu][Gg]\\s*)?#\\s*\\d+)*', 0, 0, 0, undef, 0, '#stay', 'Bug')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '[^ ]*'
+   # attribute => 'Keyword'
+   # column => '0'
+   # context => 'Head'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '[^ ]*', 0, 0, 0, 0, 0, 'Head', 'Keyword')) {
+      return 1
+   }
+   # String => '<.*@.*>'
+   # attribute => 'Email'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '<.*@.*>', 0, 0, 0, undef, 0, '#stay', 'Email')) {
+      return 1
+   }
+   # String => ' \-\-'
+   # attribute => 'Keyword'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, ' \\-\\-', 0, 0, 0, 0, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => '  \*'
+   # attribute => 'Keyword'
+   # column => '0'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '  \\*', 0, 0, 0, 0, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => '[Cc][Ll][Oo][Ss][Ee][Ss]:[\s]*(([Bb][Uu][Gg]\s*)?#\s*\d+)(\s*, *([Bb[Uu][Gg]\s*)?#\s*\d+)*'
+   # attribute => 'Bug'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '[Cc][Ll][Oo][Ss][Ee][Ss]:[\\s]*(([Bb][Uu][Gg]\\s*)?#\\s*\\d+)(\\s*, *([Bb[Uu][Gg]\\s*)?#\\s*\\d+)*', 0, 0, 0, undef, 0, '#stay', 'Bug')) {
+      return 1
+   }
+   return 0;
 };
 
 

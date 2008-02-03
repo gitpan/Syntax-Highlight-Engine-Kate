@@ -2,149 +2,174 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/cue.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'cue.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 0.91
 #kate version 2.1
-#generated: Wed Nov  1 21:17:45 2006, localtime
+#generated: Sun Feb  3 22:02:04 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::CUE_Sheet;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Comment' => 'Comment',
-		'Decimal' => 'DecVal',
-		'Flags' => 'Reserved',
-		'Format' => 'Function',
-		'Keyword' => 'Keyword',
-		'Mode' => 'Operator',
-		'Normal Text' => 'Normal',
-		'String' => 'String',
-	});
-	$self->listAdd('flags',
-		'4CH',
-		'DCP',
-		'PRE',
-		'SCMS',
-	);
-	$self->listAdd('format',
-		'AIFF',
-		'BINARY',
-		'MOTOTOLA',
-		'MP3',
-		'WAVE',
-	);
-	$self->listAdd('keywords',
-		'CATALOG',
-		'CDTEXTFILE',
-		'FILE',
-		'FLAGS',
-		'INDEX',
-		'ISRC',
-		'PERFORMER',
-		'POSTGAP',
-		'PREGAP',
-		'REM',
-		'SONGWRITER',
-		'TITLE',
-		'TRACK',
-	);
-	$self->listAdd('mode',
-		'AUDIO',
-		'CDG',
-		'CDI',
-		'MODE1',
-		'MODE2',
-		'RAW',
-	);
-	$self->contextdata({
-		'Comment' => {
-			callback => \&parseComment,
-			attribute => 'Comment',
-			lineending => '#pop',
-		},
-		'Normal' => {
-			callback => \&parseNormal,
-			attribute => 'Normal Text',
-		},
-		'String' => {
-			callback => \&parseString,
-			attribute => 'String',
-			lineending => '#pop',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('Normal');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Comment' => 'Comment',
+      'Decimal' => 'DecVal',
+      'Flags' => 'Reserved',
+      'Format' => 'Function',
+      'Keyword' => 'Keyword',
+      'Mode' => 'Operator',
+      'Normal Text' => 'Normal',
+      'String' => 'String',
+   });
+   $self->listAdd('flags',
+      '4CH',
+      'DCP',
+      'PRE',
+      'SCMS',
+   );
+   $self->listAdd('format',
+      'AIFF',
+      'BINARY',
+      'MOTOTOLA',
+      'MP3',
+      'WAVE',
+   );
+   $self->listAdd('keywords',
+      'CATALOG',
+      'CDTEXTFILE',
+      'FILE',
+      'FLAGS',
+      'INDEX',
+      'ISRC',
+      'PERFORMER',
+      'POSTGAP',
+      'PREGAP',
+      'REM',
+      'SONGWRITER',
+      'TITLE',
+      'TRACK',
+   );
+   $self->listAdd('mode',
+      'AUDIO',
+      'CDG',
+      'CDI',
+      'MODE1',
+      'MODE2',
+      'RAW',
+   );
+   $self->contextdata({
+      'Comment' => {
+         callback => \&parseComment,
+         attribute => 'Comment',
+         lineending => '#pop',
+      },
+      'Normal' => {
+         callback => \&parseNormal,
+         attribute => 'Normal Text',
+      },
+      'String' => {
+         callback => \&parseString,
+         attribute => 'String',
+         lineending => '#pop',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('Normal');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'CUE Sheet';
+   return 'CUE Sheet';
 }
 
 sub parseComment {
-	my ($self, $text) = @_;
-	return 0;
+   my ($self, $text) = @_;
+   return 0;
 };
 
 sub parseNormal {
-	my ($self, $text) = @_;
-	# type => keyword
-	if ($self->testKeyword($text, 'keywords', 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'format', 0, 0, undef, 0, '#stay', 'Format')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'mode', 0, 0, undef, 0, '#stay', 'Mode')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'flags', 0, 0, undef, 0, '#stay', 'Flags')) {
-		return 1
-	}
-	# type => Int
-	if ($self->testInt($text, 0, undef, 0, '#stay', 'Decimal')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, 'String', 'String')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, ';', 0, 0, 0, undef, 0, 'Comment', 'Comment')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => 'keywords'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'keywords', 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => 'format'
+   # attribute => 'Format'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'format', 0, undef, 0, '#stay', 'Format')) {
+      return 1
+   }
+   # String => 'mode'
+   # attribute => 'Mode'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'mode', 0, undef, 0, '#stay', 'Mode')) {
+      return 1
+   }
+   # String => 'flags'
+   # attribute => 'Flags'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'flags', 0, undef, 0, '#stay', 'Flags')) {
+      return 1
+   }
+   # attribute => 'Decimal'
+   # context => '#stay'
+   # type => 'Int'
+   if ($self->testInt($text, 0, undef, 0, '#stay', 'Decimal')) {
+      return 1
+   }
+   # attribute => 'String'
+   # char => '"'
+   # context => 'String'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, 'String', 'String')) {
+      return 1
+   }
+   # attribute => 'Comment'
+   # char => ';'
+   # context => 'Comment'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, ';', 0, 0, 0, undef, 0, 'Comment', 'Comment')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseString {
-	my ($self, $text) = @_;
-	# type => LineContinue
-	if ($self->testLineContinue($text, 0, undef, 0, '#stay', 'String')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, '#pop', 'String')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'String'
+   # context => '#stay'
+   # type => 'LineContinue'
+   if ($self->testLineContinue($text, 0, undef, 0, '#stay', 'String')) {
+      return 1
+   }
+   # attribute => 'String'
+   # char => '"'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '"', 0, 0, 0, undef, 0, '#pop', 'String')) {
+      return 1
+   }
+   return 0;
 };
 
 

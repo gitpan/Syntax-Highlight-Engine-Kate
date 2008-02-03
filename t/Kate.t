@@ -4,124 +4,16 @@ use Term::ANSIColor;
 
 use Test;
 
-my %langs = (
-	'.desktop' => "highlight.desktop",
-	'4GL' => "",
-	'4GL-PER' => "",
-	'AHDL' => "highlight.ahdl",
-	'ANSI C89' => "",
-	'ASP' => "highlight.asp",
-	'AVR Assembler' => "highlight.asm",
-	'AWK' => "highlight.awk",
-	'Ada' => "",
-	'Alerts' => "",
-	'Asm6502' => "",
-	'Bash' => "highlight.sh",
-	'BibTeX' => "highlight.bib",
-	'C' => "",
-	'C#' => "",
-	'C++' => "highlight.cpp",
-	'CGiS' => "",
-	'CMake' => "highlight.cmake",
-	'CSS' => "highlight.css",
-	'CUE Sheet' => "",
-	'Cg' => "",
-	'ChangeLog' => "",
-	'Cisco' => "",
-	'Clipper' => "highlight.prg",
-	'ColdFusion' => "",
-	'Common Lisp' => "highlight.lisp",
-	'Component-Pascal' => "",
-	'D' => "",
-	'Debian Changelog' => "",
-	'Debian Control' => "",
-	'Diff' => "",
-	'Doxygen' => "highlight.dox",
-	#one of these two is wrong, Eiffel does not look good at all any way
-	'E Language' => "highlight.e",
-#	'E Language' => "",
-	'Eiffel' => "highlight.e",
-	'Euphoria' => "highlight.exu",
-	'Fortran' => "highlight.f90",
-	'GDL' => "",
-	'GLSL' => "highlight.glsl",
-	'GNU Assembler' => "",
-	'GNU Gettext' => "",
-	'HTML' => "highlight.html",
-	'Haskell' => "highlight.hs",
-	'IDL' => "",
-	'ILERPG' => "",
-	'INI Files' => "",
-	'Inform' => "",
-	'Intel x86 (NASM)' => "highlight.asm",
-	'JSP' => "highlight.jsp",
-	'Java' => "highlight.java",
-	'JavaScript' => "highlight.js",
-	'Javadoc' => "",
-	'KBasic' => "",
-	'LDIF' => "",
-	'LPC' => "",
-	'LaTeX' => "highlight.tex",
-	'Lex/Flex' => "highlight.lex",
-	'LilyPond' => "highlight.ly",
-	'Literate Haskell' => "highlight.hs",
-	'Lua' => "",
-	'MAB-DB' => "",
-	'MIPS Assembler' => "",
-	'Makefile' => "",
-	'Mason' => "",
-	'Matlab' => "highlight.m",
-	'Modula-2' => "",
-	'Music Publisher' => "",
-	'Octave' => "highlight.m",
-	'PHP (HTML)' => "highlight.php",
-	'PHP/PHP' => "",
-	'POV-Ray' => "highlight.pov",
-	'Pascal' => "",
-	'Perl' => "highlight.pl",
-	'PicAsm' => "highlight.asm",
-	'Pike' => "highlight.pike",
-	'PostScript' => "highlight.ps",
-	'Prolog' => "",
-	'PureBasic' => "highlight.pb",
-	'Python' => "highlight.py",
-	'Quake Script' => "highlight.rib",
-	'R Script' => "",
-	'REXX' => "",
-	'RPM Spec' => "",
-	'RSI IDL' => "",
-	'RenderMan RIB' => "",
-	'Ruby' => "highlight.rb",
-	'SGML' => "",
-	'SML' => "",
-	'SQL' => "",
-	'SQL (MySQL)' => "",
-	'SQL (PostgreSQL)' => "",
-	'Sather' => "",
-	'Scheme' => "highlight.scheme",
-	'Sieve' => "",
-	'Spice' => "highlight.sp",
-	'Stata' => "highlight.do",
-	'TI Basic' => "",
-	'Tcl/Tk' => "highlight.tcl",
-	'UnrealScript' => "highlight.uc",
-	'VHDL' => "",
-	'VRML' => "highlight.wrl",
-	'Velocity' => "",
-	'Verilog' => "",
-	'WINE Config' => "",
-	'XML' => "highlight.xml",
-	'XML (Debug)' => "",
-	'Yacc/Bison' => "",
-	'ferite' => "",
-	'progress' => "",
-	'scilab' => "",
-	'txt2tags' => "",
-	'xHarbour' => "",
-	'xslt' => "highlight.xsl",
-	'yacas' => "highlight.y",
-);
-
+my %reg = ();
+open RG, "<REGISTERED" or  die "cannot open REGISTERED";
+while (my $t = <RG>) {
+	chomp($t);
+	my ($lang, $testfile) = split /\t/, $t;
+	unless (defined($testfile)) { $testfile = "" }
+	print "#language $lang, samplefile, ;$testfile; quovadis\n";
+	$reg{$lang} = $testfile;
+}
+close RG;
 
 my %filetypes = (
 	'../some/path/index.html' => 'HTML',
@@ -157,7 +49,7 @@ my %options = (
 	},
 );
 
-my @langl = sort keys %langs;
+my @langl = sort keys %reg;
 my @ftl = sort keys %filetypes;
 my $numtest = (@langl * 4) + 2 + (@ftl * 2);
 
@@ -169,10 +61,11 @@ my $k = new Syntax::Highlight::Engine::Kate(%options);
 ok(defined($k), 1, "cannot create Kate");
 
 for (@ftl) {
-	my $l = $k->languagePropose($_);
-	ok($l, $filetypes{$_}, "Cannot select correct filetype for $_");
-	$k->languageAutoSet($_);
-	ok($k->language, $filetypes{$_}, "Cannot select correct filetype for $_");
+	my $t = $_;
+	my $l = $k->languagePropose($t);
+	ok($l, $filetypes{$t}, "Cannot select correct filetype for $t");
+	$k->languageAutoSet($t);
+	ok($k->language, $filetypes{$t}, "Cannot select correct filetype for $t");
 }
 
 for (@langl) {
@@ -184,10 +77,10 @@ for (@langl) {
 	ok($@, "", "cannot find $mod");
 	my $m = new $mod(%options);
 	ok(defined($m), 1, "cannot create $mod");
-	my $fl = $langs{$ln};
+	my $fl = $reg{$ln};
 	if ($fl ne "") {
 		my $txt = "";
-		open(TST, "<samples/$fl") or die "cannot open $fl";
+		open(TST, "<$fl") or die "cannot open $fl";
 		while (<TST>) { 
 			$txt = $txt . $_; 
 		};
@@ -198,7 +91,7 @@ for (@langl) {
 		$k->reset;
 		eval "\$res = \$k->highlightText(\$txt)";
 		ok($@, "", "errors when highlighting");
-		print $res;
+#		print $res;
 		print "testing standalone\n";
 		eval "\$res = \$m->highlightText(\$txt)";
 		ok($@, "", "errors when highlighting");

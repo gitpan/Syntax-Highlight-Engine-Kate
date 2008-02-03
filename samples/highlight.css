@@ -28,7 +28,7 @@ p:lang(nl),
 img[align="right"]
 {
 	border: 1px solid red !important;
-	-moz-border-radius: 15px; /* unknown properties render italic */
+	-moz-border-radius: 15px; /* unknown properties render as error */
 }
 
 @media print {
@@ -43,3 +43,4 @@ img[align="right"]
 /*
 TODO: add more tests, e.g. media
 */
+

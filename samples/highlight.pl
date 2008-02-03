@@ -6,6 +6,8 @@ sub prg($)
 {
 	my $var = shift;
 
+	'\'\\'
+
 	$var =~ s/bla/foo/igs;
 	$var =~ s!bla!foo!igs;
 	$var =~ s#bla#foo#igs;
@@ -42,5 +44,6 @@ sub blah {
 
 &blah;
 prg("test");
+
 
 

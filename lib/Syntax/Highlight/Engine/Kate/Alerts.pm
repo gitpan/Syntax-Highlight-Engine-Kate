@@ -2,66 +2,69 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/alert.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'alert.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 1.06
 #kate version 2.3
 #kate author Dominik Haumann (dhdev@gmx.de)
-#generated: Wed Nov  1 21:17:43 2006, localtime
+#generated: Sun Feb  3 22:02:04 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::Alerts;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Alert' => 'Alert',
-		'Normal Text' => 'Normal',
-	});
-	$self->listAdd('alerts',
-		'###',
-		'FIXME',
-		'HACK',
-		'NOTE',
-		'NOTICE',
-		'TASK',
-		'TODO',
-	);
-	$self->contextdata({
-		'Normal Text' => {
-			callback => \&parseNormalText,
-			attribute => 'Normal Text',
-			lineending => '#pop',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('Normal Text');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Alert' => 'Alert',
+      'Normal Text' => 'Normal',
+   });
+   $self->listAdd('alerts',
+      '###',
+      'FIXME',
+      'HACK',
+      'NOTE',
+      'NOTICE',
+      'TASK',
+      'TODO',
+   );
+   $self->contextdata({
+      'Normal Text' => {
+         callback => \&parseNormalText,
+         attribute => 'Normal Text',
+         lineending => '#pop',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('Normal Text');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'Alerts';
+   return 'Alerts';
 }
 
 sub parseNormalText {
-	my ($self, $text) = @_;
-	# type => keyword
-	if ($self->testKeyword($text, 'alerts', 0, 0, undef, 0, '#stay', 'Alert')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => 'alerts'
+   # attribute => 'Alert'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'alerts', 0, undef, 0, '#stay', 'Alert')) {
+      return 1
+   }
+   return 0;
 };
 
 

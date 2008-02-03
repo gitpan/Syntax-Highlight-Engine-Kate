@@ -2,158 +2,206 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/rpmspec.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'rpmspec.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
-#kate xml version 1.04
+#kate xml version 1.1
 #kate version 2.4
-#generated: Wed Nov  1 21:17:52 2006, localtime
+#generated: Sun Feb  3 22:02:06 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::RPM_Spec;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Blue' => 'DecVal',
-		'Comment' => 'Comment',
-		'Data' => 'DataType',
-		'Keyword' => 'Keyword',
-		'Normal Text' => 'Normal',
-		'Red' => 'String',
-	});
-	$self->listAdd('keywords',
-		'BuildRequires',
-		'BuildRoot',
-		'Copyright',
-		'Group',
-		'License',
-		'Name',
-		'Packager',
-		'Prefix',
-		'Provides',
-		'Release',
-		'Requires',
-		'Serial',
-		'Source',
-		'Summary',
-		'URL',
-		'Url',
-		'Vendor',
-		'Version',
-	);
-	$self->listAdd('types',
-		'Artistic',
-		'GPL',
-		'LGPL',
-	);
-	$self->contextdata({
-		'Comment' => {
-			callback => \&parseComment,
-			attribute => 'Comment',
-			lineending => '#pop',
-		},
-		'Normal' => {
-			callback => \&parseNormal,
-			attribute => 'Normal Text',
-		},
-		'Some Context' => {
-			callback => \&parseSomeContext,
-			attribute => 'Keyword',
-			lineending => '#pop',
-		},
-		'Some Context2' => {
-			callback => \&parseSomeContext2,
-			attribute => 'Blue',
-			lineending => '#pop',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('Normal');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Blue' => 'DecVal',
+      'Comment' => 'Comment',
+      'Data' => 'DataType',
+      'Keyword' => 'Keyword',
+      'Normal Text' => 'Normal',
+      'Red' => 'String',
+   });
+   $self->listAdd('keywords',
+      'BuildArch',
+      'BuildArchitectures',
+      'BuildConflicts',
+      'BuildRequires',
+      'BuildRoot',
+      'Conflicts',
+      'Copyright',
+      'Distribution',
+      'Epoch',
+      'ExcludeArch',
+      'ExcludeOs',
+      'ExclusiveArch',
+      'ExclusiveOs',
+      'Group',
+      'License',
+      'Name',
+      'Obsoletes',
+      'Packager',
+      'PreReq',
+      'Prefix',
+      'Provides',
+      'Release',
+      'Requires',
+      'Serial',
+      'Source',
+      'Summary',
+      'URL',
+      'Url',
+      'Vendor',
+      'Version',
+   );
+   $self->listAdd('types',
+      'Artistic',
+      'GPL',
+      'LGPL',
+   );
+   $self->contextdata({
+      'Comment' => {
+         callback => \&parseComment,
+         attribute => 'Comment',
+         lineending => '#pop',
+      },
+      'Normal' => {
+         callback => \&parseNormal,
+         attribute => 'Normal Text',
+      },
+      'Some Context' => {
+         callback => \&parseSomeContext,
+         attribute => 'Keyword',
+         lineending => '#pop',
+      },
+      'Some Context2' => {
+         callback => \&parseSomeContext2,
+         attribute => 'Blue',
+         lineending => '#pop',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('Normal');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return 'RPM Spec';
+   return 'RPM Spec';
 }
 
 sub parseComment {
-	my ($self, $text) = @_;
-	return 0;
+   my ($self, $text) = @_;
+   return 0;
 };
 
 sub parseNormal {
-	my ($self, $text) = @_;
-	# type => keyword
-	if ($self->testKeyword($text, 'keywords', 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => keyword
-	if ($self->testKeyword($text, 'types', 0, 0, undef, 0, '#stay', 'Data')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '%\\w*', 0, 0, 0, undef, 0, '#stay', 'Red')) {
-		return 1
-	}
-	# type => DetectChar
-	if ($self->testDetectChar($text, '#', 0, 0, 0, undef, 0, 'Comment', 'Comment')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\{\\w*', 0, 0, 0, undef, 0, 'Some Context', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '<\\s*[\\w@\\.]*', 0, 0, 0, undef, 0, 'Some Context2', 'Blue')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\$\\w*', 0, 0, 0, undef, 0, '#stay', 'Data')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '(Source|Patch)\\d*', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '\\*.*', 0, 0, 0, undef, 1, '#stay', 'Keyword')) {
-		return 1
-	}
-	# type => Int
-	if ($self->testInt($text, 0, undef, 0, '#stay', 'Blue')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => 'keywords'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'keywords', 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => 'types'
+   # attribute => 'Data'
+   # context => '#stay'
+   # type => 'keyword'
+   if ($self->testKeyword($text, 'types', 0, undef, 0, '#stay', 'Data')) {
+      return 1
+   }
+   # String => '%\w*'
+   # attribute => 'Red'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '%\\w*', 0, 0, 0, undef, 0, '#stay', 'Red')) {
+      return 1
+   }
+   # attribute => 'Comment'
+   # char => '#'
+   # context => 'Comment'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '#', 0, 0, 0, undef, 0, 'Comment', 'Comment')) {
+      return 1
+   }
+   # String => '\{\w*'
+   # attribute => 'Keyword'
+   # context => 'Some Context'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\{\\w*', 0, 0, 0, undef, 0, 'Some Context', 'Keyword')) {
+      return 1
+   }
+   # String => '<\s*[\w@\.]*'
+   # attribute => 'Blue'
+   # context => 'Some Context2'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '<\\s*[\\w@\\.]*', 0, 0, 0, undef, 0, 'Some Context2', 'Blue')) {
+      return 1
+   }
+   # String => '\$\w*'
+   # attribute => 'Data'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\$\\w*', 0, 0, 0, undef, 0, '#stay', 'Data')) {
+      return 1
+   }
+   # String => '(Source|Patch)\d*'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '(Source|Patch)\\d*', 0, 0, 0, undef, 0, '#stay', 'Keyword')) {
+      return 1
+   }
+   # String => '\*.*'
+   # attribute => 'Keyword'
+   # context => '#stay'
+   # firstNonSpace => 'true'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '\\*.*', 0, 0, 0, undef, 1, '#stay', 'Keyword')) {
+      return 1
+   }
+   # attribute => 'Blue'
+   # context => '#stay'
+   # type => 'Int'
+   if ($self->testInt($text, 0, undef, 0, '#stay', 'Blue')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseSomeContext {
-	my ($self, $text) = @_;
-	# type => DetectChar
-	if ($self->testDetectChar($text, '}', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Keyword'
+   # char => '}'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '}', 0, 0, 0, undef, 0, '#pop', 'Keyword')) {
+      return 1
+   }
+   return 0;
 };
 
 sub parseSomeContext2 {
-	my ($self, $text) = @_;
-	# type => DetectChar
-	if ($self->testDetectChar($text, '>', 0, 0, 0, undef, 0, '#pop', 'Blue')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # attribute => 'Blue'
+   # char => '>'
+   # context => '#pop'
+   # type => 'DetectChar'
+   if ($self->testDetectChar($text, '>', 0, 0, 0, undef, 0, '#pop', 'Blue')) {
+      return 1
+   }
+   return 0;
 };
 
 

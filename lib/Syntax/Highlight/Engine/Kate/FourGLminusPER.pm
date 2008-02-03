@@ -2,139 +2,145 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-# This file was generated from the 'katexml/fgl-per.xml' file of the syntax highlight
-# engine of the kate text editor (http://kate.kde.org
+# This file was generated from the 'fgl-per.xml' file of the syntax highlight
+# engine of the kate text editor (http://www.kate-editor.org
 
 #kate xml version 1.01
 #kate version 2.3
 #kate author Andrej Falout (andrej@falout.org)
-#generated: Wed Nov  1 21:17:46 2006, localtime
+#generated: Sun Feb  3 22:02:04 2008, localtime
 
 package Syntax::Highlight::Engine::Kate::FourGLminusPER;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
 use base('Syntax::Highlight::Engine::Kate::Template');
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = $class->SUPER::new(@_);
-	$self->attributes({
-		'Alert' => 'Alert',
-		'Char' => 'Char',
-		'Comment' => 'Comment',
-		'Data Type' => 'DataType',
-		'Decimal' => 'DecVal',
-		'Float' => 'Float',
-		'Hex' => 'BaseN',
-		'Keyword' => 'Keyword',
-		'Normal Text' => 'Normal',
-		'Octal' => 'BaseN',
-		'Prep. Lib' => 'Others',
-		'Preprocessor' => 'Others',
-		'String' => 'String',
-		'String Char' => 'Char',
-		'Symbol' => 'Normal',
-	});
-	$self->listAdd('keywords',
-		'COMPRESS',
-		'UPSHIFT',
-		'WORDWRAP',
-		'attributes',
-		'autonext',
-		'black',
-		'blue',
-		'by',
-		'character',
-		'color',
-		'comments',
-		'cyan',
-		'database',
-		'default',
-		'delimiters',
-		'display',
-		'downshift',
-		'end',
-		'format',
-		'formonly',
-		'green',
-		'include',
-		'input',
-		'instructions',
-		'invisible',
-		'keys',
-		'like',
-		'magenta',
-		'noentry',
-		'not',
-		'noupdate',
-		'null',
-		'picture',
-		'record',
-		'red',
-		'required',
-		'reverse',
-		'screen',
-		'size',
-		'tables',
-		'through',
-		'to',
-		'today',
-		'type',
-		'underline',
-		'white',
-		'without',
-		'yellow',
-	);
-	$self->listAdd('types',
-		'DATETIME',
-		'DECIMAL',
-		'FRACTION',
-		'INTERVAL',
-		'NUMERIC',
-		'VARCHAR',
-		'array',
-		'char',
-		'date',
-		'float',
-		'integer',
-		'money',
-		'serial',
-		'smallint',
-	);
-	$self->contextdata({
-		'noname' => {
-			callback => \&parsenoname,
-			attribute => 'Comment',
-		},
-	});
-	$self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
-	$self->basecontext('noname');
-	$self->keywordscase(1);
-	$self->initialize;
-	bless ($self, $class);
-	return $self;
+   my $proto = shift;
+   my $class = ref($proto) || $proto;
+   my $self = $class->SUPER::new(@_);
+   $self->attributes({
+      'Alert' => 'Alert',
+      'Char' => 'Char',
+      'Comment' => 'Comment',
+      'Data Type' => 'DataType',
+      'Decimal' => 'DecVal',
+      'Float' => 'Float',
+      'Hex' => 'BaseN',
+      'Keyword' => 'Keyword',
+      'Normal Text' => 'Normal',
+      'Octal' => 'BaseN',
+      'Prep. Lib' => 'Others',
+      'Preprocessor' => 'Others',
+      'String' => 'String',
+      'String Char' => 'Char',
+      'Symbol' => 'Normal',
+   });
+   $self->listAdd('keywords',
+      'COMPRESS',
+      'UPSHIFT',
+      'WORDWRAP',
+      'attributes',
+      'autonext',
+      'black',
+      'blue',
+      'by',
+      'character',
+      'color',
+      'comments',
+      'cyan',
+      'database',
+      'default',
+      'delimiters',
+      'display',
+      'downshift',
+      'end',
+      'format',
+      'formonly',
+      'green',
+      'include',
+      'input',
+      'instructions',
+      'invisible',
+      'keys',
+      'like',
+      'magenta',
+      'noentry',
+      'not',
+      'noupdate',
+      'null',
+      'picture',
+      'record',
+      'red',
+      'required',
+      'reverse',
+      'screen',
+      'size',
+      'tables',
+      'through',
+      'to',
+      'today',
+      'type',
+      'underline',
+      'white',
+      'without',
+      'yellow',
+   );
+   $self->listAdd('types',
+      'DATETIME',
+      'DECIMAL',
+      'FRACTION',
+      'INTERVAL',
+      'NUMERIC',
+      'VARCHAR',
+      'array',
+      'char',
+      'date',
+      'float',
+      'integer',
+      'money',
+      'serial',
+      'smallint',
+   );
+   $self->contextdata({
+      'noname' => {
+         callback => \&parsenoname,
+         attribute => 'Comment',
+      },
+   });
+   $self->deliminators('\\s||\\.|\\(|\\)|:|\\!|\\+|,|-|<|=|>|\\%|\\&|\\*|\\/|;|\\?|\\[|\\]|\\^|\\{|\\||\\}|\\~|\\\\');
+   $self->basecontext('noname');
+   $self->keywordscase(0);
+   $self->initialize;
+   bless ($self, $class);
+   return $self;
 }
 
 sub language {
-	return '4GL-PER';
+   return '4GL-PER';
 }
 
 sub parsenoname {
-	my ($self, $text) = @_;
-	# type => RegExpr
-	if ($self->testRegExpr($text, '#if', 0, 0, 0, undef, 0, '9', 'Comment')) {
-		return 1
-	}
-	# type => RegExpr
-	if ($self->testRegExpr($text, '#endif', 0, 0, 0, undef, 0, '#pop', 'Comment')) {
-		return 1
-	}
-	return 0;
+   my ($self, $text) = @_;
+   # String => '#if'
+   # attribute => 'Comment'
+   # context => '9'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '#if', 0, 0, 0, undef, 0, '9', 'Comment')) {
+      return 1
+   }
+   # String => '#endif'
+   # attribute => 'Comment'
+   # context => '#pop'
+   # type => 'RegExpr'
+   if ($self->testRegExpr($text, '#endif', 0, 0, 0, undef, 0, '#pop', 'Comment')) {
+      return 1
+   }
+   return 0;
 };
 
 
