@@ -12,8 +12,6 @@ Asm6502
 ASP	./samples/highlight.asp
 AVR Assembler	./samples/highlight.asm-avr
 AWK	./samples/highlight.awk
-BaseTest	./samples/highlight.basetest
-BaseTestchild	
 Bash	./samples/highlight.sh
 BibTeX	./samples/highlight.bib
 C	

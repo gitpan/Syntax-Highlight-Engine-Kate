@@ -304,7 +304,7 @@ not mean that all bugs are shaken out.
  progress             Progress                 No sample file
  scilab               Scilab                   No sample file
  txt2tags             Txt2tags                 No sample file
- x.org Configuration  X_org_Configuration      No sample file
+ x.org Configuration  X_org_Configuration      OK
  xHarbour             XHarbour                 OK
  xslt                 Xslt                     No sample file
  yacas                Yacas                    No sample file
