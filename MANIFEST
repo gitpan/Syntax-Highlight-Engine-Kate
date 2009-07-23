@@ -1,8 +1,15 @@
 bin/hlansi.pl
 bin/hlhtml.pl
 Changes
+inc/Module/Install.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Can.pm
+inc/Module/Install/Fetch.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/Metadata.pm
+inc/Module/Install/Win32.pm
+inc/Module/Install/WriteAll.pm
 lib/Syntax/Highlight/Engine/Kate.pm
-lib/Syntax/Highlight/Engine/Kate.pod
 lib/Syntax/Highlight/Engine/Kate/ABC.pm
 lib/Syntax/Highlight/Engine/Kate/Ada.pm
 lib/Syntax/Highlight/Engine/Kate/AHDL.pm
@@ -140,8 +147,8 @@ lib/Syntax/Highlight/Engine/Kate/Xslt.pm
 lib/Syntax/Highlight/Engine/Kate/Yacas.pm
 lib/Syntax/Highlight/Engine/Kate/Yacc_Bison.pm
 Makefile.PL
-MANIFEST
-META.yml			Module meta-data (added by MakeMaker)
+MANIFEST			This list of files
+META.yml
 README
 REGISTERED
 samples/highlight.abc
@@ -199,5 +206,5 @@ samples/highlight_lpc.c
 samples/highlight_ocaml.ml
 samples/highlight_octave.m
 samples/xorg.conf
-t/Kate.t
 t/02-perl.t
+t/Kate.t

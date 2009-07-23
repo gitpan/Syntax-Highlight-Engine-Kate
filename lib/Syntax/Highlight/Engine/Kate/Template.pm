@@ -4,8 +4,7 @@
 
 package Syntax::Highlight::Engine::Kate::Template;
 
-use vars qw($VERSION);
-$VERSION = '0.03';
+our $VERSION = '0.06';
 
 use strict;
 use Carp qw(cluck);
@@ -531,10 +530,13 @@ sub snippet {
 
 sub snippetAppend {
 	my ($self, $ch) = @_;
+
+	return if not defined $ch;
 	$self->{'snippet'} = $self->{'snippet'} . $ch;
 	if ($ch ne '') {
 		$self->linesegment($self->linesegment . $ch);
 	}
+	return;
 }
 
 sub snippetAttribute {

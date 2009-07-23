@@ -1,21 +1,31 @@
---- #YAML:1.0
-name:               Syntax-Highlight-Engine-Kate
-version:            0.05
-abstract:           a port to Perl of the syntax highlight engine of the Kate texteditor.
+---
+abstract: 'a port to Perl of the syntax highlight engine of the Kate texteditor.'
 author:
-    - Hans Jeuken <haje <at> toneel <dot> demon <dot> nl>
-license:            unknown
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
+  - 'Hans Jeuken'
 build_requires:
-    ExtUtils::MakeMaker:  0
-requires:  {}
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.50
+  ExtUtils::MakeMaker: 6.42
+  Term::ANSIColor: 0
+  Test::More: 0.88
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
+distribution_type: module
+generated_by: 'Module::Install version 0.91'
+license: perl
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Syntax-Highlight-Engine-Kate
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  Carp: 0
+  Data::Dumper: 0
+  File::Basename: 0
+  perl: 5.006
+resources:
+  homepage: http://padre.perlide.org/
+  license: http://dev.perl.org/licenses/
+  repository: http://svn.perlide.org/padre/trunk/Syntax-Highlight-Engine-Kate/
+version: 0.06
