@@ -2,21 +2,21 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
-package Syntax::Highlight::Engine::Kate::XMLData;
+package Syntax::Highlight::Engine::Kate::Convert::XMLData;
 
 use strict;
 use warnings;
 use XML::TokeParser;
 use Data::Dumper;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 my $regchars = "\\^.\$|()[]{}*+?~!%^&/";
 
 sub new {
 	my $proto = shift;
 	my $class = ref($proto) || $proto;
-	
+
 	my $file = shift @_;
 	unless (defined($file)) { $file = ''; }
 	my $self = {
@@ -190,7 +190,7 @@ sub metadata {
 	my $self = shift;
 	my $key = shift;
 	my $m = $self->{'metadata'};
-	if (@_) { 
+	if (@_) {
 		$m->{$key} = shift;
 	}
 	my $res = '';

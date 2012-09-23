@@ -12,7 +12,7 @@
 
 package Syntax::Highlight::Engine::Kate::BibTeX;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -216,7 +216,7 @@ Syntax::Highlight::Engine::Kate::BibTeX - a Plugin for BibTeX syntax highlightin
 =head1 DESCRIPTION
 
 Syntax::Highlight::Engine::Kate::BibTeX is a  plugin module that provides syntax highlighting
-for BibTeX to the Syntax::Haghlight::Engine::Kate highlighting engine.
+for BibTeX to the Syntax::Highlight::Engine::Kate highlighting engine.
 
 This code is generated from the syntax definition files used
 by the Kate project.
@@ -224,17 +224,10 @@ It works quite fine, but can use refinement and optimization.
 
 It inherits Syntax::Higlight::Engine::Kate::Template. See also there.
 
-=cut
-
 =head1 AUTHOR
 
 Hans Jeuken (haje <at> toneel <dot> demon <dot> nl)
 
-=cut
-
 =head1 BUGS
 
 Unknown. If you find any, please contact the author
-
-=cut
-

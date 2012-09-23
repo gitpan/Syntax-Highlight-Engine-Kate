@@ -4,7 +4,7 @@
 
 package Syntax::Highlight::Engine::Kate::Template;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use strict;
 use Carp qw(cluck);
@@ -844,6 +844,13 @@ sub testRegExpr {
 	my $pos;
 #	my @cap = ();
 	my $sample = $$text;
+
+	# emergency measurements to avoid exception (szabgab)
+	$reg = eval { qr/$reg/ };
+	if ($@) {
+		warn $@;
+		return '';
+	}
 	if ($insensitive) {
 		if ($sample =~ /$reg/ig) {
 			$pos = pos($sample);
@@ -915,8 +922,6 @@ sub testStringDetect {
 1;
 
 __END__
-
-=cut
 
 =head1 NAME
 
@@ -1178,18 +1183,3 @@ Perl itself
 =head1 SEE ALSO
 
 Synax::Highlight::Engine::Kate http:://www.kate-editor.org
-
-=cut
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -11,7 +11,7 @@
 
 package Syntax::Highlight::Engine::Kate::De_DE;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use strict;
 use warnings;
@@ -263,17 +263,10 @@ It works quite fine, but can use refinement and optimization.
 
 It inherits Syntax::Higlight::Engine::Kate::Template. See also there.
 
-=cut
-
 =head1 AUTHOR
 
 Hans Jeuken (haje <at> toneel <dot> demon <dot> nl)
 
-=cut
-
 =head1 BUGS
 
 Unknown. If you find any, please contact the author
-
-=cut
-

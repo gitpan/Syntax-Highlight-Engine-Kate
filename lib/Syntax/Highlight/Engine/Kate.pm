@@ -6,7 +6,7 @@
 package Syntax::Highlight::Engine::Kate;
 
 use 5.006;
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 use strict;
 use warnings;
 use Carp;
@@ -855,7 +855,7 @@ not mean that all bugs are shaken out.
  Apache Configuration Apache_Configuration     No sample file
  Asm6502              Asm6502                  No sample file
  Bash                 Bash                     OK
- BibTeX               BibTex                   OK
+ BibTeX               BibTeX                   OK
  C                    C                        No sample file
  C#                   Cdash                    No sample file
  C++                  Cplusplus                OK
@@ -1010,7 +1010,7 @@ as Perl itself.
 
 =head1 SEE ALSO
 
-Synax::Highlight::Engine::Kate::Template http:://www.kate-editor.org
+Syntax::Highlight::Engine::Kate::Template http:://www.kate-editor.org
 
 =cut
 
