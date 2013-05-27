@@ -25,6 +25,8 @@ lib/Syntax/Highlight/Engine/Kate/Asm6502.pm
 lib/Syntax/Highlight/Engine/Kate/ASP.pm
 lib/Syntax/Highlight/Engine/Kate/AVR_Assembler.pm
 lib/Syntax/Highlight/Engine/Kate/AWK.pm
+lib/Syntax/Highlight/Engine/Kate/BaseTest.pm
+lib/Syntax/Highlight/Engine/Kate/BaseTestchild.pm
 lib/Syntax/Highlight/Engine/Kate/Bash.pm
 lib/Syntax/Highlight/Engine/Kate/BibTeX.pm
 lib/Syntax/Highlight/Engine/Kate/C.pm
