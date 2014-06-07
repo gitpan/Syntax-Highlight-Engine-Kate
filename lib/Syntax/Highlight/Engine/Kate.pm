@@ -6,10 +6,10 @@
 package Syntax::Highlight::Engine::Kate;
 
 use 5.006;
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 use strict;
 use warnings;
-use Carp;
+use Carp qw(carp croak);
 use Data::Dumper;
 use File::Basename;
 
@@ -616,11 +616,30 @@ sub languagePropose {
 }
 
 sub languagePlug {
-	my ($self, $req) = @_;
+	my ($self, $req, $insensitive) = @_;
+
 	unless (exists($self->{'syntaxes'}->{$req})) {
-		warn "undefined language: $req";
-		return undef;
+		if (defined($insensitive) && $insensitive) {
+			my $matched = 0;
+			foreach my $key (keys(%{$self->{'syntaxes'}})) {
+				if (lc($key) eq lc($req)) {
+					carp "substituting language $key for $req";
+					$req = $key;
+					$matched = 1;
+					last;
+				}
+			}
+
+			unless ($matched) {
+				carp "undefined language: '$req'";
+				return undef;
+			}
+		} else {
+			carp "undefined language: '$req'";
+			return undef;
+		}
 	}
+
 	return $self->{'syntaxes'}->{$req};
 }
 
@@ -631,6 +650,9 @@ sub reset {
 		$self->stack([]);
 	} else {
 		my $plug	= $self->pluginGet($lang);
+		if (not $plug) {
+			croak "Plugin for language '$lang' could not be found.";
+		}
 		my $basecontext = $plug->basecontext;
 		$self->stack([
 			[$plug, $basecontext]
@@ -773,7 +795,7 @@ If you created your own language plugins you may specify a list of them with thi
 
 =item B<format_table>
 
-This option must be specified if the B<highlightText> method needs to do anything usefull for you.
+This option must be specified if the B<highlightText> method needs to do anything useful for you.
 All mentioned keys in the synopsis must be specified.
 
 
@@ -804,9 +826,13 @@ Suggests language name for the fiven file B<$filename>
 
 returns a list of languages for which plugins have been defined.
 
-=item B<languagePlug>(I<$language>);
+=item B<languagePlug>(I<$language>, I<?$insensitive?>);
 
-returns the module name of the plugin for B<$language>
+Returns the module name of the plugin for B<$language>.
+
+If B<$insensitive> is set it will also try to match names ignoring case and return the correct module name of the plugin.
+
+e.g. $highlighter->languagePlug('HtMl', 1); will return 'HTML'.
 
 =item B<languagePropose>(I<$filename>);
 

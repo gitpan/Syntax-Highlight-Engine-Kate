@@ -4,7 +4,7 @@
 
 package Syntax::Highlight::Engine::Kate::Template;
 
-our $VERSION = '0.07';
+our $VERSION = '0.09';
 
 use strict;
 use Carp qw(cluck);
@@ -506,7 +506,7 @@ sub pluginGet {
 		if (defined($plug)) {
 			$plugs->{$language} = $plug;
 		} else {
-			$self->logwarning("cannot create plugin for language '$language'\n$@");
+			$self->logwarning("cannot create plugin for language '$language'\n--------------\n$@");
 		}
 	}
 	if (exists($plugs->{$language})) {

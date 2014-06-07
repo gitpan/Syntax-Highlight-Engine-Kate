@@ -214,6 +214,7 @@ samples/highlight_ocaml.ml
 samples/highlight_octave.m
 samples/xorg.conf
 t/02-perl.t
+t/10-case.t
 t/Kate.t
 t/lib/TestHighlight.pm
 t/perl/before/kate.pl
